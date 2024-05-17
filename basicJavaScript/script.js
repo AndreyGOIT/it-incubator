@@ -6,8 +6,9 @@ function padRow(rowNumber, rowCount) {
   return " ".repeat(rowCount - rowNumber) + character.repeat(rowNumber) + " ".repeat(rowCount - rowNumber);
 };
 
-for (let i = 0; i < count; i++) {
-  rows.push(character.repeat(i + 1));
+// remember change initial value of i to "0" (zero)
+for (let i = 1; i <= count; i++) {
+  rows.push(padRow(i, count));
 }
 
 let result = "";
