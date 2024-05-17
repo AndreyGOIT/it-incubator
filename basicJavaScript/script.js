@@ -2,11 +2,9 @@ const character = "#";
 const count = 8;
 const rows = [];
 
-function padRow(name) {
-  return name;
-}
-const call = padRow("Andy");
-console.log(call);
+function padRow(rowNumber, rowCount) {
+  return " ".repeat(rowCount - rowNumber) + character.repeat(rowNumber) + " ".repeat(rowCount - rowNumber);
+};
 
 for (let i = 0; i < count; i = i + 1) {
   rows.push(character.repeat(i + 1));
