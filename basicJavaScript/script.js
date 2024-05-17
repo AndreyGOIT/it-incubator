@@ -6,7 +6,7 @@ function padRow(rowNumber, rowCount) {
   return " ".repeat(rowCount - rowNumber) + character.repeat(rowNumber) + " ".repeat(rowCount - rowNumber);
 };
 
-// remember change initial value of i to "0" (zero)
+// TODO: use a different type of loop
 for (let i = 1; i <= count; i++) {
   rows.push(padRow(i, count));
 }
