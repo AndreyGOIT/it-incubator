@@ -16,7 +16,8 @@ let done = 0;
 
 while (continueLoop) {
   done++;
-if (done === count) {
+  rows.push(padRow(done, count));
+  if (done === count) {
   continueLoop = false;
 };
 }
