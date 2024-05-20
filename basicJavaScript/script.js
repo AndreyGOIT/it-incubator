@@ -14,7 +14,7 @@ for (let i = 1; i <= count; i++) {
 let continueLoop = false;
 let done = 0;
 
-while (done !== count) {
+while (rows.length <= count) {
   done++;
   rows.push(padRow(done, count));
 }
