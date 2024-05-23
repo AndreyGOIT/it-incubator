@@ -25,3 +25,14 @@ function getAverage(scores) {
         console.log(getGrade(96));
         console.log(getGrade(82));
         console.log(getGrade(56));
+
+        function hasPassingGrade(score) {
+            const passingScore = ["A++", "A", "B", "C", "D"];
+            const grade = getGrade(score)
+            return passingScore.includes(grade)
+          }
+          
+          
+          console.log(hasPassingGrade(100));
+          console.log(hasPassingGrade(53));
+          console.log(hasPassingGrade(87));
