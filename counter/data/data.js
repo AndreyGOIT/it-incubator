@@ -1,10 +1,19 @@
-import { renderCounter } from '../components/counter/renderCounter.js';
-
 export const data = {
     clientsCount: 0
 };
 
+let calback = function() {};
+
 setInterval(() => {
     data.clientsCount++;
-    renderCounter(data);
+    calback();
 }, 1000);
+
+export function setCalback(newCalback) { 
+    calback = newCalback
+}
+
+export function increaseClientsCount() {
+    data.clientsCount++;
+    calback();
+}
