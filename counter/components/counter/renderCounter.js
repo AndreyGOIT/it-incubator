@@ -1,9 +1,9 @@
-import { renderHeader } from "./header/renderHeader";
-import { renderCount } from "./value/renderCount";
-import { renderButton } from "./button/renderButton";
+import { Header } from "./header/Header";
+import { Count } from "./value/Count";
+import { Button } from "./button/Button";
 
 export function renderCounter(data) {
-    renderHeader();
-    renderCount(datd.clientsCount);
-    renderButton();
+    Header();
+    Count(data.clientsCount);
+    Button();
 }
