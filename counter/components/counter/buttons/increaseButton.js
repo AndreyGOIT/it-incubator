@@ -1,6 +1,6 @@
 import {increaseClientsCount} from "../../../data/data.js";
 
-export function Button() {
+export function increaseButton() {
     const element = document.createElement("button");
     element.append("+");
     // element.onclick = increment;

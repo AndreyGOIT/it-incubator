@@ -17,3 +17,8 @@ export function increaseClientsCount() {
     data.clientsCount++;
     calback();
 }
+
+export function decreaseClientsCount() {
+    data.clientsCount--;
+    calback();
+}
