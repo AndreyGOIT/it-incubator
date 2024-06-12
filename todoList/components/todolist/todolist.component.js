@@ -9,7 +9,11 @@ export function Todolist(data) {
     const tasksListElement = TasksList(data.tasks);
     const buttonsElement = ButtonsPanel();
 
-    container.append(headerElement, tasksListElement, buttonsElement);
+    container.append(
+        headerElement, 
+        tasksListElement, 
+        buttonsElement
+    );
 
     return container;
 };

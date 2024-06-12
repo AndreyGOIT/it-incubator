@@ -1,8 +1,16 @@
-import {data} from './data/data.js';
-import {Todolist} from './components/todolist/todolist.component.js';
+import { data, subscribe } from "./data/data.js";
+import { Todolist } from "./components/todolist/todolist.component.js";
 
-const todolistElement = Todolist(data.todolist);
+subscribe(refreshUI);
 
-const rootElement = document.getElementById('root');
+function refreshUI() {
+  const todolistElement = Todolist(data.todolist);
 
-rootElement.append(todolistElement);
+  const rootElement = document.getElementById("root");
+  
+  rootElement.innerHTML = "";
+
+  rootElement.append(todolistElement);
+}
+
+refreshUI();
