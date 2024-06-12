@@ -34,3 +34,9 @@ export function createTask(title) {
 
   notifySubscribers();
 }
+
+export function deleteTask(id) {
+data.todolist.tasks = data.todolist.tasks.filter(task => task.id !== id);
+
+  notifySubscribers();
+}
