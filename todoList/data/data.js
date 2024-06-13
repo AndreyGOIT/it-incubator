@@ -12,8 +12,18 @@ export const data = {
         title: "Learn CSS",
       },
     ],
+    isAddTaskDialogOpen: false,
   },
 };
+
+export function openAddTaskDialod() {
+  data.todolist.isAddTaskDialogOpen = true;
+};
+
+export function closeAddTaskDialod() {
+  data.todolist.isAddTaskDialogOpen = false;
+};
+
 
 let notifySubscribers = null;
 

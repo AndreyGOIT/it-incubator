@@ -1,4 +1,4 @@
-import {deleteTask} from '../../../../data/data.js'
+import { DeleteButton } from './DeleteButton/DeleteButton.js';
 
 export function Task(task) {
     const container = document.createElement('li');
@@ -10,12 +10,4 @@ export function Task(task) {
     return container;
 }
 
-function DeleteButton(taskId) {
-    const deleteButtonElement = document.createElement('button');
-    deleteButtonElement.append('❌');
 
-    deleteButtonElement.addEventListener('click', () => {
-        deleteTask(taskId)
-    });
-    return deleteButtonElement;
-}
