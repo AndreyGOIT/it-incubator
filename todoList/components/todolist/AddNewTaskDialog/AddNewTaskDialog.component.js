@@ -7,8 +7,12 @@ export function AddNewTaskDialog() {
     const saveButtonElement = document.createElement('button');
     saveButtonElement.append('Save');
     saveButtonElement.addEventListener('click', () => {
-        createTask(inputElement.value);
-        closeAddTaskDialod();
+        if (inputElement.value.trim().length > 0) {
+            createTask(inputElement.value);
+            closeAddTaskDialod();
+        } else {
+            inputElement.classList.add('error');
+        }
     });
 
     const cancelButtonElement = document.createElement('button');
