@@ -12,22 +12,30 @@ export const data = {
         title: "Learn CSS",
       },
     ],
-    isAddTaskDialogOpen: false,
+    addNewTaskDialog: {
+      isOpen: false,
+      error: null,
+    },
   },
 };
 
-export function openAddTaskDialod() {
-  data.todolist.isAddTaskDialogOpen = true;
+function setError(error) {
+  data.todolist.addNewTaskDialog.error = error;
 
   notifySubscribers();
-};
+}
+
+export function openAddTaskDialod() {
+  data.todolist.addNewTaskDialog.isOpen = true;
+
+  notifySubscribers();
+}
 
 export function closeAddTaskDialod() {
-  data.todolist.isAddTaskDialogOpen = false;
+  data.todolist.addNewTaskDialog.isOpen = false;
 
   notifySubscribers();
-};
-
+}
 
 let notifySubscribers = null;
 
@@ -40,17 +48,24 @@ function createUniqueId() {
 }
 
 export function createTask(newTitle) {
-  const newTask = {
-    id: createUniqueId(),
-    title: newTitle,
-  };
-  data.todolist.tasks.push(newTask);
+  if (newTitle.trim().length > 0) {
+    const newTask = {
+      id: createUniqueId(),
+      title: newTitle,
+    };
+    data.todolist.tasks.push(newTask);
 
-  notifySubscribers();
+    notifySubscribers();
+    return true;
+    } else {
+      setError("Title is required");
+      notifySubscribers();
+      return false;
+      }
 }
 
 export function deleteTask(id) {
-data.todolist.tasks = data.todolist.tasks.filter(task => task.id !== id);
+  data.todolist.tasks = data.todolist.tasks.filter((task) => task.id !== id);
 
   notifySubscribers();
 }
