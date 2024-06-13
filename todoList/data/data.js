@@ -18,10 +18,14 @@ export const data = {
 
 export function openAddTaskDialod() {
   data.todolist.isAddTaskDialogOpen = true;
+
+  notifySubscribers();
 };
 
 export function closeAddTaskDialod() {
   data.todolist.isAddTaskDialogOpen = false;
+
+  notifySubscribers();
 };
 
 
