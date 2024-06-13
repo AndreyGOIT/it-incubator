@@ -39,10 +39,10 @@ function createUniqueId() {
   return Math.floor(Math.random() * 10000);
 }
 
-export function createTask(title) {
+export function createTask(newTitle) {
   const newTask = {
     id: createUniqueId(),
-    title: '-----------',
+    title: newTitle,
   };
   data.todolist.tasks.push(newTask);
 
