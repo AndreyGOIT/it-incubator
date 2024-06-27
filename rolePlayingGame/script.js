@@ -18,8 +18,12 @@ const monsterName = document.querySelector("#monsterName");
 const monsterHealthText = document.querySelector("#monsterHealth");
 
 function goStore() {
-    return console.log("Going to store.")
+  return console.log("Going to store.");
 }
 function goCave() {
-    console.log("Going to cave.");
-  }
+  console.log("Going to cave.");
+}
+
+function fightDragon() {
+  console.log("Fighting dragon.");
+}
