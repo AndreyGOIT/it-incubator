@@ -13,7 +13,7 @@ export const data = {
         decreaseDeltaInMs: 100,
         isMuted: true,
     },
-    status: OFFER_STATUSES.missed,
+    status: OFFER_STATUSES.default,
     coords: {
         current: {
             x: 1,
@@ -37,7 +37,14 @@ export function subscribe(newSubscriber) {
 }
 
 setInterval(() => {
-    data.coords.current.x = 3;
-    data.coords.current.y = 3;
-    subscriber();
+    moveOfferToRandomPosition();
 }, 2000);
+
+export function moveOfferToRandomPosition() {
+    data.coords.previous.x = data.coords.current.x;
+    data.coords.previous.y = data.coords.current.y;
+    data.coords.current.x = Math.floor(Math.random() * data.settings.rowsCount);
+    data.coords.current.y = Math.floor(Math.random() * data.settings.columnsCount);
+    data.status = OFFER_STATUSES.default;
+    subscriber();
+}
