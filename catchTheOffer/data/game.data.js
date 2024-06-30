@@ -5,6 +5,7 @@ export const data = {
         pointsToWin: 10,
         maxMisses: 3,
         decreaseDeltaInMs: 100,
+        isMuted: true,
     },
     coords: {
         current: {
@@ -19,5 +20,9 @@ export const data = {
             x: 0,
             y: 0
         }
+    },
+    score: {
+        catchedCount: 0,
+        missedCount: 0
     }
 }
