@@ -13,12 +13,12 @@ export const data = {
             y: 0
         },
         catched: {
-            x: 0,
-            y: 0
+            x: 1,
+            y: 1
         },
         missed: {
-            x: 0,
-            y: 0
+            x: 2,
+            y: 2
         }
     },
     score: {
