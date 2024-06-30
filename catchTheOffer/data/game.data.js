@@ -9,20 +9,20 @@ export const data = {
     },
     coords: {
         current: {
-            x: 0,
+            x: 1,
             y: 0
         },
         catched: {
             x: 1,
-            y: 1
+            y: 2
         },
         missed: {
             x: 2,
-            y: 2
+            y: 1
         }
     },
     score: {
-        catchedCount: 0,
-        missedCount: 0
+        catchedCount: 1,
+        missedCount: 2
     }
 }
