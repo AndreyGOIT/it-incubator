@@ -1,4 +1,4 @@
-import { data } from "../../../../data/game.data.js";
+import { OFFER_STATUSES, data } from "../../../../data/game.data.js";
 
 export function Cell(x, y) {
     const cellEl = document.createElement('td');
@@ -8,17 +8,15 @@ export function Cell(x, y) {
         offerEl.src = 'assets/offer_stand.png';
         cellEl.append(offerEl);
     }
-    if (x === data.coords.catched.x && y === data.coords.catched.y) {
+    if (data.status === OFFER_STATUSES.catched && x === data.coords.catched.x && y === data.coords.catched.y) {
         const offerEl = document.createElement('img');
         offerEl.src = 'assets/offer_to_job.png';
         cellEl.append(offerEl);
         
     }
-    if (x === data.coords.missed.x && y === data.coords.missed.y) {
+    if (data.status === OFFER_STATUSES.missed && x === data.coords.missed.x && y === data.coords.missed.y) {
         const offerEl = document.createElement('img');
         offerEl.src = 'assets/offer_missed.png';
-        offerEl.onload = () => console.log('Image loaded successfully');
-        offerEl.onerror = () => console.error('Failed to load image');
         cellEl.append(offerEl);
         
     }
