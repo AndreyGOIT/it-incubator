@@ -1,44 +1,51 @@
 export const OFFER_STATUSES = {
-    default: 'default',
-    missed: 'missed',
-    catched: 'catched'
-}
+  default: "default",
+  missed: "missed",
+  catched: "catched",
+};
 
 export const data = {
-    settings: {
-        rowsCount: 5,
-        columnsCount: 5,
-        pointsToWin: 10,
-        maxMisses: 3,
-        decreaseDeltaInMs: 200,
-        isMuted: true,
+  settings: {
+    rowsCount: 5,
+    columnsCount: 5,
+    pointsToWin: 10,
+    maxMisses: 3,
+    decreaseDeltaInMs: 200,
+    isMuted: true,
+  },
+  status: OFFER_STATUSES.default,
+  coords: {
+    current: {
+      x: 1,
+      y: 0,
     },
-    status: OFFER_STATUSES.default,
-    coords: {
-        current: {
-            x: 1,
-            y: 0
-        },
-        previous: {
-            x: 1,
-            y: 2
-        }
+    previous: {
+      x: 1,
+      y: 2,
     },
-    score: {
-        catchedCount: 1,
-        missedCount: 2
-    }
-}
+  },
+  score: {
+    catchedCount: 1,
+    missedCount: 2,
+  },
+};
 
-let subscriber = function() {};
+let subscriber = function () {};
 
 export function subscribe(newSubscriber) {
-    subscriber = newSubscriber;
+  subscriber = newSubscriber;
 }
 
-setInterval(() => {
+let stepIntervalId;
+function runStepInterval() {
+  stepIntervalId = setInterval(() => {
+    missOffer();
     moveOfferToRandomPosition();
-}, 2000);
+    subscriber();
+  }, 2000);
+}
+
+runStepInterval();
 
 // export function moveOfferToRandomPosition() {
 //     data.coords.previous.x = data.coords.current.x;
@@ -50,45 +57,46 @@ setInterval(() => {
 // }
 
 export function moveOfferToRandomPosition() {
-    let newX = null;
-    let newY = null;
+  let newX = null;
+  let newY = null;
 
-    do {
-        newX = getRandom(data.settings.columnsCount - 1);
-        newY = getRandom(data.settings.rowsCount - 1);
-    } while (data.coords.current.x === newX && data.coords.current.y === newY);
+  do {
+    newX = getRandom(data.settings.columnsCount - 1);
+    newY = getRandom(data.settings.rowsCount - 1);
+  } while (data.coords.current.x === newX && data.coords.current.y === newY);
 
-    missOffer();
-
-    data.coords.current.x = newX;
-    data.coords.current.y = newY;
-    subscriber();
+  data.coords.current.x = newX;
+  data.coords.current.y = newY;
 }
 
 function missOffer() {
-    data.status = OFFER_STATUSES.missed;
-    data.score.missedCount++;
+  data.status = OFFER_STATUSES.missed;
+  data.score.missedCount++;
 
-    data.coords.previous = {...data.coords.current};
+  data.coords.previous = { ...data.coords.current };
 
-    setTimeout(() => {
-        data.status = OFFER_STATUSES.default;
-        subscriber();
-    }, 200);
+  setTimeout(() => {
+    data.status = OFFER_STATUSES.default;
+    subscriber();
+  }, 200);
 }
 
 export function catchOffer() {
-    data.status = OFFER_STATUSES.catched;
-    data.score.catchedCount++;
+  data.status = OFFER_STATUSES.catched;
+  data.score.catchedCount++;
 
-    data.coords.previous = {...data.coords.current};
-    
-    setTimeout(() => {
-        data.status = OFFER_STATUSES.default;
-        subscriber();
-    }, 200);
+  data.coords.previous = { ...data.coords.current };
+
+  setTimeout(() => {
+    data.status = OFFER_STATUSES.default;
+    subscriber();
+  }, 200);
+  moveOfferToRandomPosition();
+  subscriber();
+  clearInterval(stepIntervalId);
+  runStepInterval();
 }
 
 function getRandom(N) {
-    return Math.floor(Math.random() * (N + 1));
+  return Math.floor(Math.random() * (N + 1));
 }
