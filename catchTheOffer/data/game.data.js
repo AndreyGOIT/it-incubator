@@ -1,6 +1,11 @@
 export const data = {
-    rowsCount: 3,
-    columnsCount: 3,
+    settings: {
+        rowsCount: 3,
+        columnsCount: 3,
+        pointsToWin: 10,
+        maxMisses: 3,
+        decreaseDeltaInMs: 100,
+    },
     coords: {
         current: {
             x: 0,
