@@ -7,6 +7,7 @@ export const data = {
         decreaseDeltaInMs: 100,
         isMuted: true,
     },
+    status: 'default', // default | missed | catched
     coords: {
         current: {
             x: 1,
