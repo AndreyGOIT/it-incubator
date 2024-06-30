@@ -58,18 +58,35 @@ export function moveOfferToRandomPosition() {
         newY = getRandom(data.settings.rowsCount - 1);
     } while (data.coords.current.x === newX && data.coords.current.y === newY);
 
-    data.status = OFFER_STATUSES.missed;
-    data.coords.previous = {...data.coords.current};
+    missOffer();
 
     data.coords.current.x = newX;
     data.coords.current.y = newY;
+    subscriber();
+}
+
+function missOffer() {
+    data.status = OFFER_STATUSES.missed;
+    data.score.missedCount++;
+
+    data.coords.previous = {...data.coords.current};
 
     setTimeout(() => {
         data.status = OFFER_STATUSES.default;
         subscriber();
     }, 200);
+}
 
-    subscriber();
+export function catchOffer() {
+    data.status = OFFER_STATUSES.catched;
+    data.score.catchedCount++;
+
+    data.coords.previous = {...data.coords.current};
+    
+    setTimeout(() => {
+        data.status = OFFER_STATUSES.default;
+        subscriber();
+    }, 200);
 }
 
 function getRandom(N) {
