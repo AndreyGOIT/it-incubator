@@ -30,10 +30,13 @@ export const data = {
   },
 };
 
-let subscriber = function () {};
+let subscribers = [];
 
+function notify() {
+  subscribers.forEach((subscriber) => subscriber());
+}
 export function subscribe(newSubscriber) {
-  subscriber = newSubscriber;
+  subscribers.push(newSubscriber);
 }
 
 let stepIntervalId;
@@ -41,7 +44,7 @@ function runStepInterval() {
   stepIntervalId = setInterval(() => {
     missOffer();
     moveOfferToRandomPosition();
-    subscriber();
+    notify();
   }, 2000);
 }
 
@@ -77,7 +80,7 @@ function missOffer() {
 
   setTimeout(() => {
     data.status = OFFER_STATUSES.default;
-    subscriber();
+    notify();
   }, 200);
 }
 
@@ -89,10 +92,10 @@ export function catchOffer() {
 
   setTimeout(() => {
     data.status = OFFER_STATUSES.default;
-    subscriber();
+    notify();
   }, 200);
   moveOfferToRandomPosition();
-  subscriber();
+  notify();
   clearInterval(stepIntervalId);
   runStepInterval();
 }

@@ -1,6 +1,8 @@
 import {Game} from './ui/game/game.components.js';
 import { subscribe } from './data/game.data.js';
+import {Player} from './sound/player.js';
 
+Player();
 
 subscribe(renderApp);
 
