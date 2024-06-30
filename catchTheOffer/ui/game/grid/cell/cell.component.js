@@ -8,13 +8,13 @@ export function Cell(x, y) {
         offerEl.src = 'assets/offer_stand.png';
         cellEl.append(offerEl);
     }
-    if (data.status === OFFER_STATUSES.catched && x === data.coords.catched.x && y === data.coords.catched.y) {
+    if (data.status === OFFER_STATUSES.catched && x === data.coords.previous.x && y === data.coords.previous.y) {
         const offerEl = document.createElement('img');
         offerEl.src = 'assets/offer_to_job.png';
         cellEl.append(offerEl);
         
     }
-    if (data.status === OFFER_STATUSES.missed && x === data.coords.missed.x && y === data.coords.missed.y) {
+    if (data.status === OFFER_STATUSES.missed && x === data.coords.previous.x && y === data.coords.previous.y) {
         const offerEl = document.createElement('img');
         offerEl.src = 'assets/offer_missed.png';
         cellEl.append(offerEl);

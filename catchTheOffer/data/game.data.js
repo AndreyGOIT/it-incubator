@@ -13,19 +13,15 @@ export const data = {
         decreaseDeltaInMs: 100,
         isMuted: true,
     },
-    status: OFFER_STATUSES.catched,
+    status: OFFER_STATUSES.missed,
     coords: {
         current: {
             x: 1,
             y: 0
         },
-        catched: {
+        previous: {
             x: 1,
             y: 2
-        },
-        missed: {
-            x: 2,
-            y: 1
         }
     },
     score: {
@@ -33,3 +29,15 @@ export const data = {
         missedCount: 2
     }
 }
+
+let subscriber = function() {};
+
+export function subscribe(newSubscriber) {
+    subscriber = newSubscriber;
+}
+
+setInterval(() => {
+    data.coords.current.x = 3;
+    data.coords.current.y = 3;
+    subscriber();
+}, 2000);
