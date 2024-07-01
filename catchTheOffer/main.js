@@ -4,7 +4,7 @@ import {Player} from './sound/player.js';
 
 Player();
 
-subscribe(renderApp);
+// subscribe(renderApp);
 
 function renderApp() {
     document.body.innerHTML = '';
