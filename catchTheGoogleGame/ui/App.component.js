@@ -1,9 +1,10 @@
 import {getPoints} from '../data/state-manager.js';
 
 export function AppComponent() {
+    const element = document.createElement('div');
+    
     const points = getPoints();
 
-    const div = document.createElement('div');
-    div.append(`Catched: ${points.catch}; Misses: ${points.miss}`)
-    return div;
+    element.append(`Catched: ${points.catch}; Misses: ${points.miss}`)
+    return element;
 }

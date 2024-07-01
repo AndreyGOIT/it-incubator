@@ -1,13 +1,23 @@
 // todo: change points structure
 const _state = {
-    miss: 2,
-    catch: 3,
+    points: {
+        miss: 2,
+        catch: 3,
+    }
+}
+let _observer = () => {};
+export function setObserver(observer) {
+    _observer = observer;
 }
 // getter / selector / query / CQS
 export const getPoints = function () {
     return {
-        miss: _state.miss,
-        catch: _state.catch,
+        miss: _state.points.miss,
+        catch: _state.points.catch,
     };
 };
 
+setInterval(() => {
+    _state.points.miss++;
+    _observer();
+}, 1000);
