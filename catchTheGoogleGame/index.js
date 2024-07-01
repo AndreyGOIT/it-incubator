@@ -1,7 +1,13 @@
+import { setObserver } from './data/state-manager.js';
 import {AppComponent} from './ui/App.component.js';
 
 const rootElement = document.getElementById('root');
 
-const appComponent = AppComponent();
+function render() {
+    rootElement.innerHTML = '';
+    const appComponent = AppComponent();
+    rootElement.append(appComponent);
+}
 
-rootElement.append(appComponent);
+render();
+setObserver(render);
