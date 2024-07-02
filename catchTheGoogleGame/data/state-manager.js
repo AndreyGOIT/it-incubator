@@ -1,5 +1,7 @@
+import {GAME_STATUSES} from './costants.js';
 // todo: change points structure
 const _state = {
+    gameStatus: GAME_STATUSES.SETTINGS,
     points: {
         miss: 2,
         catch: 3,
@@ -25,11 +27,11 @@ export const getPoints = function () {
     };
 };
 
-setInterval(() => {
+let intervalId = setInterval(() => {
     _state.points.miss++;
 
     if (_state.points.miss >= _state.settings.pointsToLose) {
-        alert('You lose');
+        clearInterval(intervalId);
     }
     _observer();
 }, 1000);
