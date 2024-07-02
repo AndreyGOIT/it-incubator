@@ -1,11 +1,12 @@
 export function GridComponent() {
     const element = document.createElement('table');
-    for (let i = 0; i < 5; i++) {
+    for (let y = 0; y < 5; y++) {
         const row = document.createElement('tr');
-        for (let j = 0; j < 5; j++) {
+        for (let x = 0; x < 5; x++) {
             const cell = document.createElement('td');
-            cell.setAttribute('class', 'cell');
-            cell.setAttribute('data-id', i * 5 + j);
+            cell.addEventListener('click', () => {
+                console.log(`Clicked on cell ${x}, ${y}`);
+            });
             row.append(cell);
         }
         element.append(row);
