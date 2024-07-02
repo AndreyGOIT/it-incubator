@@ -1,5 +1,6 @@
 import {ResultPanelComponent} from './ResultPanel/ResultPanel.component.js';
 import {LoseComponent} from './Lose/Lose.component.js';
+import {GridComponent} from './Grid/Grid.component.js';
 import { getGameStatus } from '../data/state-manager.js';
 import { GAME_STATUSES } from '../data/costants.js';
 
@@ -23,6 +24,8 @@ export function AppComponent() {
         [GAME_STATUSES.IN_PROGRESS]: () => {
             const resultPanelElement = ResultPanelComponent();
             element.append(resultPanelElement);
+            const gridElement = GridComponent();
+            element.append(gridElement);
         },
     }
     transitions[status]();
