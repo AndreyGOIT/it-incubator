@@ -1,8 +1,13 @@
+import { getGridSize } from "../../data/state-manager.js";
+
 export function GridComponent() {
     const element = document.createElement('table');
-    for (let y = 0; y < 5; y++) {
+
+    const gridSize = getGridSize();
+
+    for (let y = 0; y < gridSize.height; y++) {
         const rowElement = document.createElement('tr');
-        for (let x = 0; x < 5; x++) {
+        for (let x = 0; x < gridSize.width; x++) {
             const cellElement = document.createElement('td');
             cellElement.textContent = `${x} - ${y}`;
             cellElement.addEventListener('click', () => {

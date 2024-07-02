@@ -10,7 +10,7 @@ const _state = {
         pointsToLose: 5,
         pointsToWin: 5,
         gridSize: {
-            width: 4,
+            width: 5,
             height: 4,
         }
     }
@@ -44,7 +44,11 @@ export function getPoints() {
 export function getGameStatus() {
     return _state.gameStatus;
 };
-
+// mapper 
+export function getGridSize() {
+    return _state.settings.gridSize;
+}
+// setter / command / mutator / side-effect / CQRS
 export function playAgain() {
     _state.gameStatus = GAME_STATUSES.IN_PROGRESS;
     _state.points.miss = 0;
