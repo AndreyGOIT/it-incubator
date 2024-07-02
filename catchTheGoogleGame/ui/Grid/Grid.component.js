@@ -1,15 +1,16 @@
 export function GridComponent() {
     const element = document.createElement('table');
     for (let y = 0; y < 5; y++) {
-        const row = document.createElement('tr');
+        const rowElement = document.createElement('tr');
         for (let x = 0; x < 5; x++) {
-            const cell = document.createElement('td');
-            cell.addEventListener('click', () => {
+            const cellElement = document.createElement('td');
+            cellElement.textContent = `${x} - ${y}`;
+            cellElement.addEventListener('click', () => {
                 console.log(`Clicked on cell ${x}, ${y}`);
             });
-            row.append(cell);
+            rowElement.append(cellElement);
         }
-        element.append(row);
+        element.append(rowElement);
     }
     return element;
 }
