@@ -32,6 +32,7 @@ let intervalId = setInterval(() => {
 
     if (_state.points.miss >= _state.settings.pointsToLose) {
         clearInterval(intervalId);
+        _state.gameStatus = GAME_STATUSES.LOSE;
     }
     _observer();
 }, 1000);

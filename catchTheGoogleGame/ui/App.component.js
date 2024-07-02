@@ -1,10 +1,9 @@
-import {getPoints} from '../data/state-manager.js';
+import {ResultPanelComponent} from './ResultPanel/ResultPanel.component.js';
 
 export function AppComponent() {
     const element = document.createElement('div');
-    
-    const points = getPoints();
+    const resultPanelElement = ResultPanelComponent();
+    element.append(resultPanelElement);
 
-    element.append(`Catched: ${points.catch}; Misses: ${points.miss}`)
     return element;
 }
