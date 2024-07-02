@@ -3,21 +3,41 @@ import {GAME_STATUSES} from './costants.js';
 const _state = {
     gameStatus: GAME_STATUSES.IN_PROGRESS,
     points: {
-        miss: 2,
-        catch: 3,
+        miss: 0,
+        catch: 0,
     },
     settings: {
         pointsToLose: 5,
         pointsToWin: 5,
         gridSize: {
-            width: 5,
+            width: 4,
             height: 4,
         }
+    },
+    googlePosition: {
+        x: 0,
+        y: 0,
     }
 }
 let _observer = () => {};
 export function setObserver(observer) {
     _observer = observer;
+}
+
+function _getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+}
+
+function _moveGoogleToRandomPosition() {
+    const newX = _getRandomInt(_state.settings.gridSize.width);
+    const newY = _getRandomInt(_state.settings.gridSize.height);
+
+    if (newX === _state.googlePosition.x && newY === _state.googlePosition.y) {
+        _moveGoogleToRandomPosition();
+        return;
+    }
+    _state.googlePosition.x = newX;
+    _state.googlePosition.y = newY;
 }
 
 function _play() {
@@ -27,6 +47,8 @@ function _play() {
         if (_state.points.miss >= _state.settings.pointsToLose) {
             clearInterval(_intervalId);
             _state.gameStatus = GAME_STATUSES.LOSE;
+        } else {
+            _moveGoogleToRandomPosition();
         }
         _observer();
     }, 1000);
@@ -34,7 +56,7 @@ function _play() {
 
 _play();
 
-// getter / selector / query / CQS
+// getter / selector / query / mapper
 export function getPoints() {
     return {
         miss: _state.points.miss,
@@ -44,9 +66,14 @@ export function getPoints() {
 export function getGameStatus() {
     return _state.gameStatus;
 };
-// mapper 
 export function getGridSize() {
     return _state.settings.gridSize;
+}
+export function getGooglePosition() {
+    return {
+        x: _state.googlePosition.x,
+        y: _state.googlePosition.y,
+    };
 }
 // setter / command / mutator / side-effect / CQRS
 export function playAgain() {
