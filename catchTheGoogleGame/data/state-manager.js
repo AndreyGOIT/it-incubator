@@ -19,23 +19,36 @@ let _observer = () => {};
 export function setObserver(observer) {
     _observer = observer;
 }
+
+function _play() {
+    let _intervalId = setInterval(() => {
+        _state.points.miss++;
+    
+        if (_state.points.miss >= _state.settings.pointsToLose) {
+            clearInterval(_intervalId);
+            _state.gameStatus = GAME_STATUSES.LOSE;
+        }
+        _observer();
+    }, 1000);
+}
+
+_play();
+
 // getter / selector / query / CQS
-export const getPoints = function () {
+export function getPoints() {
     return {
         miss: _state.points.miss,
         catch: _state.points.catch,
     };
 };
-export const getGameStatus = function () {
+export function getGameStatus() {
     return _state.gameStatus;
 };
 
-let intervalId = setInterval(() => {
-    _state.points.miss++;
-
-    if (_state.points.miss >= _state.settings.pointsToLose) {
-        clearInterval(intervalId);
-        _state.gameStatus = GAME_STATUSES.LOSE;
-    }
+export function playAgain() {
+    _state.gameStatus = GAME_STATUSES.IN_PROGRESS;
+    _state.points.miss = 0;
+    _state.points.catch = 0;
+    _play();
     _observer();
-}, 1000);
+}
