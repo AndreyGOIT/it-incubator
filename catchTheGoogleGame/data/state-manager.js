@@ -1,7 +1,7 @@
 import {GAME_STATUSES} from './costants.js';
 // todo: change points structure
 const _state = {
-    gameStatus: GAME_STATUSES.SETTINGS,
+    gameStatus: GAME_STATUSES.IN_PROGRESS,
     points: {
         miss: 2,
         catch: 3,
@@ -25,6 +25,9 @@ export const getPoints = function () {
         miss: _state.points.miss,
         catch: _state.points.catch,
     };
+};
+export const getGameStatus = function () {
+    return _state.gameStatus;
 };
 
 let intervalId = setInterval(() => {
