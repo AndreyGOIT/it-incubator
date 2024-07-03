@@ -6,5 +6,6 @@ export function ResultPanelComponent() {
     const points = getPoints();
 
     element.append(`Catched: ${points.catch}; Misses: ${points.miss}`)
+    
     return element;
 }

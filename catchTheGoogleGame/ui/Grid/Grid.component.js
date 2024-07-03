@@ -1,4 +1,4 @@
-import { getGooglePosition, getGridSize } from "../../data/state-manager.js";
+import { catchGoogle, getGooglePosition, getGridSize } from "../../data/state-manager.js";
 
 export function GridComponent() {
     const element = document.createElement('table');
@@ -14,11 +14,13 @@ export function GridComponent() {
             const cellElement = document.createElement('td');
             if (googlePosition.x === x && googlePosition.y === y) {
                 // todo: const googleElement = Google();
-                cellElement.append('G');
+                const googleElement = document.createElement('img');
+                googleElement.src = 'assets/google-color-svgrepo-com 1.png';
+                googleElement.addEventListener('click', () => {
+                    catchGoogle();
+                });
+                cellElement.append(googleElement);
             }
-            cellElement.addEventListener('click', () => {
-                console.log(`Clicked on cell ${x}, ${y}`);
-            });
             rowElement.append(cellElement);
         }
         element.append(rowElement);

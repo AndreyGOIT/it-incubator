@@ -17,5 +17,6 @@ export function LoseComponent() {
         playAgain();
     });
     element.append(playAgainBtnElement);
+    
     return element;
 }

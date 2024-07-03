@@ -83,3 +83,11 @@ export function playAgain() {
     _play();
     _observer();
 }
+
+export function catchGoogle() {
+    _state.points.catch++;
+    if (_state.points.catch >= _state.settings.pointsToWin) {
+        _state.gameStatus = GAME_STATUSES.WIN;
+    }
+    _observer();
+}
