@@ -96,12 +96,12 @@ export function SettingsComponent() {
 
     const startGameBtnElement = document.createElement('button');
     startGameBtnElement.textContent = 'START GAME';
+    startGameBtnElement.classList.add('button', 'main-button');
     startGameBtnElement.addEventListener('click', () => {
         playAgain();
     });
 
-    element.append(topItemsElement_1, topItemsElement_2, topItemsElement_3, topItemsElement_4)
-    // element.append(gridSizeInput, pointsToWinInput, pointsToLoseInput, soundCheckbox, startGameBtnElement);
+    element.append(topItemsElement_1, topItemsElement_2, topItemsElement_3, topItemsElement_4, startGameBtnElement);
 
     return element;
 }
