@@ -1,7 +1,7 @@
 import {GAME_STATUSES} from './costants.js';
 // todo: change points structure
 const _state = {
-    gameStatus: GAME_STATUSES.IN_PROGRESS,
+    gameStatus: GAME_STATUSES.SETTINGS,
     points: {
         miss: 0,
         catch: 0,
@@ -54,7 +54,7 @@ function _play() {
     }, 1000);
 }
 
-_play();
+// _play();
 
 // getter / selector / query / mapper
 export function getPoints() {

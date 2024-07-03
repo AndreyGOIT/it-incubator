@@ -4,6 +4,7 @@ import {GridComponent} from './Grid/Grid.component.js';
 import { getGameStatus } from '../data/state-manager.js';
 import { GAME_STATUSES } from '../data/costants.js';
 import { WinComponent } from './Win/Win.component.js';
+import { SettingsComponent } from './Settings/Settings.component.js';
 
 export function AppComponent() {
     const element = document.createElement('div');
@@ -19,7 +20,9 @@ export function AppComponent() {
             element.append(loseElement);
         },
         [GAME_STATUSES.SETTINGS]: () => {
-            console.warn('Not implemented yet');
+            const settingsElement = SettingsComponent();
+            element.append(settingsElement);
+            // console.warn('Not implemented yet');
         },
         [GAME_STATUSES.IN_PROGRESS]: () => {
             const resultPanelElement = ResultPanelComponent();
