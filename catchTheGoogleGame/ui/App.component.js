@@ -3,6 +3,7 @@ import {LoseComponent} from './Lose/Lose.component.js';
 import {GridComponent} from './Grid/Grid.component.js';
 import { getGameStatus } from '../data/state-manager.js';
 import { GAME_STATUSES } from '../data/costants.js';
+import { WinComponent } from './Win/Win.component.js';
 
 export function AppComponent() {
     const element = document.createElement('div');
@@ -10,9 +11,8 @@ export function AppComponent() {
     const status = getGameStatus();
     const transitions = {
         [GAME_STATUSES.WIN]: () => {
-            console.warn('Not implemented yet');
-            // const winElement = WinComponent();
-            // element.append(winElement);
+            const winElement = WinComponent();
+            element.append(winElement);
         },
         [GAME_STATUSES.LOSE]: () => {
             const loseElement = LoseComponent();
