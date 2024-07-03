@@ -2,6 +2,8 @@ import { catchGoogle, getGooglePosition, getGridSize } from "../../data/state-ma
 
 export function GridComponent() {
     const element = document.createElement('table');
+    element.classList.add('table');
+    const tableBodyElement = document.createElement('tbody');
 
     const gridSize = getGridSize();
     const googlePosition = getGooglePosition();
@@ -12,6 +14,7 @@ export function GridComponent() {
             // todo: move to CellComponent
             // const cellElement = CellComponent(x, y);
             const cellElement = document.createElement('td');
+            cellElement.classList.add('cell');
             if (googlePosition.x === x && googlePosition.y === y) {
                 // todo: const googleElement = Google();
                 const googleElement = document.createElement('img');
@@ -23,7 +26,8 @@ export function GridComponent() {
             }
             rowElement.append(cellElement);
         }
-        element.append(rowElement);
+        tableBodyElement.append(rowElement);
     }
+    element.append(tableBodyElement);
     return element;
 }
