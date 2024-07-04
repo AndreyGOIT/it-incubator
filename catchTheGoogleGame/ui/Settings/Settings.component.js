@@ -1,116 +1,182 @@
-import { playAgain } from "../../data/state-manager.js";
-
+import {
+  playAgain,
+  getGridSize,
+  setGridSize,
+} from "../../data/state-manager.js";
 
 export function SettingsComponent() {
-    const element = document.createElement('div');
-    element.classList.add('settings-container');
-    const topItems = document.createElement('div');
-    topItems.classList.add('top-items');
-    // ItemsElement_1
-    const topItemsElement_1 = document.createElement('div');
-    topItemsElement_1.classList.add('line');
+  const gridSize = getGridSize();
 
-    const labelElement_1 = document.createElement('label');
-    labelElement_1.append('Grid size: ');
+  const element = document.createElement("div");
+  element.classList.add("settings-container");
+  const topItems = document.createElement("div");
+  topItems.classList.add("top-items");
+  // ItemsElement_1
+  // const topItemsElement_1 = document.createElement('div');
+  // topItemsElement_1.classList.add('line');
 
-    const selectElement_1 = document.createElement('select');
-    selectElement_1.name = 'select';
-    selectElement_1.id = '01';
+  // const labelElement_1 = document.createElement('label');
+  // labelElement_1.append('Grid size: ');
 
-    const optionElement_1 = document.createElement('option');
-    optionElement_1.append('4x4');
-    const optionElement_2 = document.createElement('option');
-    optionElement_2.append('5x5');
-    const optionElement_3 = document.createElement('option');
-    optionElement_3.append('6x6');
-    const optionElement_4 = document.createElement('option');
-    optionElement_4.append('7x7');
-    const optionElement_5 = document.createElement('option');
-    optionElement_5.append('8x8');
+  // const selectElement_1 = document.createElement('select');
+  // selectElement_1.name = 'select';
+  // selectElement_1.id = '01';
 
-    selectElement_1.append(optionElement_1, optionElement_2, optionElement_3, optionElement_4, optionElement_5);
-    topItemsElement_1.append(labelElement_1, selectElement_1)
-    // ItemsElement_2
-    const topItemsElement_2 = document.createElement('div');
-    topItemsElement_2.classList.add('line');
+  // const optionElement_1 = document.createElement('option');
+  // optionElement_1.append('4x4');
+  // const optionElement_2 = document.createElement('option');
+  // optionElement_2.append('5x5');
+  // const optionElement_3 = document.createElement('option');
+  // optionElement_3.append('6x6');
+  // const optionElement_4 = document.createElement('option');
+  // optionElement_4.append('7x7');
+  // const optionElement_5 = document.createElement('option');
+  // optionElement_5.append('8x8');
 
-    const labelElement_2 = document.createElement('label');
-    labelElement_2.append('Points to win');
+  // selectElement_1.append(optionElement_1, optionElement_2, optionElement_3, optionElement_4, optionElement_5);
+  // topItemsElement_1.append(labelElement_1, selectElement_1)
+  /*-----------------------------------------------------------------------------*/
+  const topItemsElement_1 = document.createElement("div");
+  topItemsElement_1.classList.add("line");
 
-    const selectElement_2 = document.createElement('select');
-    selectElement_2.name = 'select';
-    selectElement_2.id = '02';
+  const labelElement_1 = document.createElement("label");
+  labelElement_1.textContent = "Grid size: ";
 
-    const optionElement_2_1 = document.createElement('option');
-    optionElement_2_1.append('20pts');
-    const optionElement_2_2 = document.createElement('option');
-    optionElement_2_2.append('40pts');
-    const optionElement_2_3 = document.createElement('option');
-    optionElement_2_3.append('50pts');
-    const optionElement_2_4 = document.createElement('option');
-    optionElement_2_4.append('60pts');
-    const optionElement_2_5 = document.createElement('option');
-    optionElement_2_5.append('80pts');
+  const selectElement_1 = document.createElement("select");
+  selectElement_1.name = "select";
+  selectElement_1.id = "01";
 
-    selectElement_2.append(optionElement_2_1, optionElement_2_2, optionElement_2_3, optionElement_2_4, optionElement_2_5);
-    topItemsElement_2.append(labelElement_2, selectElement_2)
-    // ItemsElement_3
-    const topItemsElement_3 = document.createElement('div');
-    topItemsElement_3.classList.add('line');
+  // Создаем опции на основе данных из _state
+  const gridSizeOptions = [
+    { label: "4x4", value: { width: 4, height: 4 } },
+    { label: "5x5", value: { width: 5, height: 5 } },
+    { label: "6x6", value: { width: 6, height: 6 } },
+    { label: "7x7", value: { width: 7, height: 7 } },
+    { label: "8x8", value: { width: 8, height: 8 } },
+  ];
 
-    const labelElement_3 = document.createElement('label');
-    labelElement_3.append('Points to lose');
+  gridSizeOptions.forEach((option) => {
+    const optionElement = document.createElement("option");
+    optionElement.textContent = option.label;
+    optionElement.value = JSON.stringify(option.value); // Сохраняем данные в JSON-строке для удобства
+    selectElement_1.appendChild(optionElement);
+  });
 
-    const selectElement_3 = document.createElement('select');
-    selectElement_3.name = 'select';
-    selectElement_3.id = '03';
+  // Устанавливаем начальное выбранное значение в соответствии с текущим состоянием
+  const currentGridSize = `${gridSize.width}x${gridSize.height}`;
+  selectElement_1.value = JSON.stringify(gridSize);
 
-    const optionElement_3_1 = document.createElement('option');
-    optionElement_3_1.append('5pts');
-    const optionElement_3_2 = document.createElement('option');
-    optionElement_3_2.append('10pts');
-    const optionElement_3_3 = document.createElement('option');
-    optionElement_3_3.append('15pts');
-    const optionElement_3_4 = document.createElement('option');
-    optionElement_3_4.append('20pts');
-    const optionElement_3_5 = document.createElement('option');
-    optionElement_3_5.append('25pts');
+  // Слушатель изменения значения select
+  selectElement_1.addEventListener("change", function () {
+    const selectedGridSize = JSON.parse(this.value);
+    // Обновляем состояние игры
+    setGridSize(selectedGridSize.width, selectedGridSize.height);
+    // Добавьте здесь вызов функции для обновления интерфейса игры с новыми параметрами
+    console.log("Selected grid size:", selectedGridSize);
+  });
 
-    selectElement_3.append(optionElement_3_1, optionElement_3_2, optionElement_3_3, optionElement_3_4, optionElement_3_5);
-    topItemsElement_3.append(labelElement_3, selectElement_3)
-    // ItemsElement_4 / toggle slider
-    const topItemsElement_4 = document.createElement('div');
-    topItemsElement_4.classList.add('switch-button');
+  topItemsElement_1.appendChild(labelElement_1);
+  topItemsElement_1.appendChild(selectElement_1);
+  /*-----------------------------------------------------------------------------*/
 
-    const labelElement_4 = document.createElement('label');
-    labelElement_4.append('Sound on');
+  // ItemsElement_2
+  const topItemsElement_2 = document.createElement("div");
+  topItemsElement_2.classList.add("line");
 
-    const soundToggleBtn = document.createElement('button');
-    soundToggleBtn.classList.add('toggle');
-    soundToggleBtn.addEventListener('click', () => {
-        toggleSound()
-    });
+  const labelElement_2 = document.createElement("label");
+  labelElement_2.append("Points to win");
 
-    const spanElement = document.createElement('span');
-    spanElement.classList.add('icon-slider');
-    soundToggleBtn.append(spanElement);
+  const selectElement_2 = document.createElement("select");
+  selectElement_2.name = "select";
+  selectElement_2.id = "02";
 
-    topItemsElement_4.append(labelElement_4, soundToggleBtn);
+  const optionElement_2_1 = document.createElement("option");
+  optionElement_2_1.append("20pts");
+  const optionElement_2_2 = document.createElement("option");
+  optionElement_2_2.append("40pts");
+  const optionElement_2_3 = document.createElement("option");
+  optionElement_2_3.append("50pts");
+  const optionElement_2_4 = document.createElement("option");
+  optionElement_2_4.append("60pts");
+  const optionElement_2_5 = document.createElement("option");
+  optionElement_2_5.append("80pts");
 
-    const startGameBtnElement = document.createElement('button');
-    startGameBtnElement.textContent = 'START GAME';
-    startGameBtnElement.classList.add('button', 'main-button');
-    startGameBtnElement.addEventListener('click', () => {
-        playAgain();
-    });
+  selectElement_2.append(
+    optionElement_2_1,
+    optionElement_2_2,
+    optionElement_2_3,
+    optionElement_2_4,
+    optionElement_2_5
+  );
+  topItemsElement_2.append(labelElement_2, selectElement_2);
+  // ItemsElement_3
+  const topItemsElement_3 = document.createElement("div");
+  topItemsElement_3.classList.add("line");
 
-    topItems.append(topItemsElement_1, topItemsElement_2, topItemsElement_3, topItemsElement_4);
-    element.append(topItems, startGameBtnElement);
+  const labelElement_3 = document.createElement("label");
+  labelElement_3.append("Points to lose");
 
-    return element;
+  const selectElement_3 = document.createElement("select");
+  selectElement_3.name = "select";
+  selectElement_3.id = "03";
+
+  const optionElement_3_1 = document.createElement("option");
+  optionElement_3_1.append("5pts");
+  const optionElement_3_2 = document.createElement("option");
+  optionElement_3_2.append("10pts");
+  const optionElement_3_3 = document.createElement("option");
+  optionElement_3_3.append("15pts");
+  const optionElement_3_4 = document.createElement("option");
+  optionElement_3_4.append("20pts");
+  const optionElement_3_5 = document.createElement("option");
+  optionElement_3_5.append("25pts");
+
+  selectElement_3.append(
+    optionElement_3_1,
+    optionElement_3_2,
+    optionElement_3_3,
+    optionElement_3_4,
+    optionElement_3_5
+  );
+  topItemsElement_3.append(labelElement_3, selectElement_3);
+  // ItemsElement_4 / toggle slider
+  const topItemsElement_4 = document.createElement("div");
+  topItemsElement_4.classList.add("switch-button");
+
+  const labelElement_4 = document.createElement("label");
+  labelElement_4.append("Sound on");
+
+  const soundToggleBtn = document.createElement("button");
+  soundToggleBtn.classList.add("toggle");
+  soundToggleBtn.addEventListener("click", () => {
+    toggleSound();
+  });
+
+  const spanElement = document.createElement("span");
+  spanElement.classList.add("icon-slider");
+  soundToggleBtn.append(spanElement);
+
+  topItemsElement_4.append(labelElement_4, soundToggleBtn);
+
+  const startGameBtnElement = document.createElement("button");
+  startGameBtnElement.textContent = "START GAME";
+  startGameBtnElement.classList.add("button", "main-button");
+  startGameBtnElement.addEventListener("click", () => {
+    playAgain();
+  });
+
+  topItems.append(
+    topItemsElement_1,
+    topItemsElement_2,
+    topItemsElement_3,
+    topItemsElement_4
+  );
+  element.append(topItems, startGameBtnElement);
+
+  return element;
 }
 
 function toggleSound() {
-    let toggleButton = document.querySelector('.toggle')
-    toggleButton.classList.toggle('on');
+  let toggleButton = document.querySelector(".toggle");
+  toggleButton.classList.toggle("on");
 }

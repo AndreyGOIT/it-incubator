@@ -96,3 +96,8 @@ export function catchGoogle() {
     }
     _observer();
 }
+// Функция для установки размера сетки
+export function setGridSize(width, height) {
+    _state.settings.gridSize.width = width;
+    _state.settings.gridSize.height = height;
+}
