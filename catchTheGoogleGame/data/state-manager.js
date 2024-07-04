@@ -54,8 +54,6 @@ function _play() {
     }, 1000);
 }
 
-// _play();
-
 // getter / selector / query / mapper
 export function getPoints() {
     return {
@@ -75,6 +73,10 @@ export function getGooglePosition() {
         y: _state.googlePosition.y,
     };
 }
+// Геттер для pointsToWin
+export function getPointsToWin() {
+    return _state.settings.pointsToWin;
+  }
 // setter / command / mutator / side-effect / CQRS
 export function playAgain() {
     _state.gameStatus = GAME_STATUSES.IN_PROGRESS;
@@ -96,8 +98,12 @@ export function catchGoogle() {
     }
     _observer();
 }
-// Функция для установки размера сетки
+// setter Функция для установки размера сетки
 export function setGridSize(width, height) {
     _state.settings.gridSize.width = width;
     _state.settings.gridSize.height = height;
 }
+// setter Функция для pointsToWin
+export function setPointsToWin(points) {
+    _state.settings.pointsToWin = points;
+  }

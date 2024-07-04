@@ -2,40 +2,19 @@ import {
   playAgain,
   getGridSize,
   setGridSize,
+  getPointsToWin,
+  setPointsToWin,
 } from "../../data/state-manager.js";
 
 export function SettingsComponent() {
   const gridSize = getGridSize();
+  const pointsToWin = getPointsToWin();
 
   const element = document.createElement("div");
   element.classList.add("settings-container");
   const topItems = document.createElement("div");
   topItems.classList.add("top-items");
   // ItemsElement_1
-  // const topItemsElement_1 = document.createElement('div');
-  // topItemsElement_1.classList.add('line');
-
-  // const labelElement_1 = document.createElement('label');
-  // labelElement_1.append('Grid size: ');
-
-  // const selectElement_1 = document.createElement('select');
-  // selectElement_1.name = 'select';
-  // selectElement_1.id = '01';
-
-  // const optionElement_1 = document.createElement('option');
-  // optionElement_1.append('4x4');
-  // const optionElement_2 = document.createElement('option');
-  // optionElement_2.append('5x5');
-  // const optionElement_3 = document.createElement('option');
-  // optionElement_3.append('6x6');
-  // const optionElement_4 = document.createElement('option');
-  // optionElement_4.append('7x7');
-  // const optionElement_5 = document.createElement('option');
-  // optionElement_5.append('8x8');
-
-  // selectElement_1.append(optionElement_1, optionElement_2, optionElement_3, optionElement_4, optionElement_5);
-  // topItemsElement_1.append(labelElement_1, selectElement_1)
-  /*-----------------------------------------------------------------------------*/
   const topItemsElement_1 = document.createElement("div");
   topItemsElement_1.classList.add("line");
 
@@ -77,38 +56,76 @@ export function SettingsComponent() {
 
   topItemsElement_1.appendChild(labelElement_1);
   topItemsElement_1.appendChild(selectElement_1);
-  /*-----------------------------------------------------------------------------*/
-
   // ItemsElement_2
+  // const topItemsElement_2 = document.createElement("div");
+  // topItemsElement_2.classList.add("line");
+
+  // const labelElement_2 = document.createElement("label");
+  // labelElement_2.append("Points to win");
+
+  // const selectElement_2 = document.createElement("select");
+  // selectElement_2.name = "select";
+  // selectElement_2.id = "02";
+
+  // const optionElement_2_1 = document.createElement("option");
+  // optionElement_2_1.append("20pts");
+  // const optionElement_2_2 = document.createElement("option");
+  // optionElement_2_2.append("40pts");
+  // const optionElement_2_3 = document.createElement("option");
+  // optionElement_2_3.append("50pts");
+  // const optionElement_2_4 = document.createElement("option");
+  // optionElement_2_4.append("60pts");
+  // const optionElement_2_5 = document.createElement("option");
+  // optionElement_2_5.append("80pts");
+
+  // selectElement_2.append(
+  //   optionElement_2_1,
+  //   optionElement_2_2,
+  //   optionElement_2_3,
+  //   optionElement_2_4,
+  //   optionElement_2_5
+  // );
+  // topItemsElement_2.append(labelElement_2, selectElement_2);
+  /*-----------------------------------------------------*/
   const topItemsElement_2 = document.createElement("div");
   topItemsElement_2.classList.add("line");
 
   const labelElement_2 = document.createElement("label");
-  labelElement_2.append("Points to win");
+  labelElement_2.textContent = "Points to win: ";
 
   const selectElement_2 = document.createElement("select");
   selectElement_2.name = "select";
   selectElement_2.id = "02";
 
-  const optionElement_2_1 = document.createElement("option");
-  optionElement_2_1.append("20pts");
-  const optionElement_2_2 = document.createElement("option");
-  optionElement_2_2.append("40pts");
-  const optionElement_2_3 = document.createElement("option");
-  optionElement_2_3.append("50pts");
-  const optionElement_2_4 = document.createElement("option");
-  optionElement_2_4.append("60pts");
-  const optionElement_2_5 = document.createElement("option");
-  optionElement_2_5.append("80pts");
+  // Создаем опции на основе данных из _state
+  const pointsToWinOptions = [
+    { label: "5 points", value: 5 },
+    { label: "10 points", value: 10 },
+    { label: "20 points", value: 20 },
+    { label: "40 points", value: 40 },
+    { label: "50 points", value: 50 },
+  ];
 
-  selectElement_2.append(
-    optionElement_2_1,
-    optionElement_2_2,
-    optionElement_2_3,
-    optionElement_2_4,
-    optionElement_2_5
-  );
-  topItemsElement_2.append(labelElement_2, selectElement_2);
+  pointsToWinOptions.forEach((option) => {
+    const optionElement = document.createElement("option");
+    optionElement.textContent = option.label;
+    optionElement.value = option.value; // Сохраняем данные в value
+    selectElement_2.appendChild(optionElement);
+  });
+
+  // Устанавливаем начальное выбранное значение в соответствии с текущим состоянием
+  selectElement_2.value = pointsToWin;
+
+  // Слушатель изменения значения select
+  selectElement_2.addEventListener("change", function () {
+    const selectedPointsToWin = parseInt(this.value, 10);
+    // Обновляем состояние игры
+    setPointsToWin(selectedPointsToWin);
+    console.log("Selected points to win:", selectedPointsToWin);
+  });
+
+  topItemsElement_2.appendChild(labelElement_2);
+  topItemsElement_2.appendChild(selectElement_2);
   // ItemsElement_3
   const topItemsElement_3 = document.createElement("div");
   topItemsElement_3.classList.add("line");
