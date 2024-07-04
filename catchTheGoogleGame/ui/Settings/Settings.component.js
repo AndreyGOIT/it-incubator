@@ -1,8 +1,11 @@
 import { playAgain } from "../../data/state-manager.js";
 
+
 export function SettingsComponent() {
     const element = document.createElement('div');
-    element.classList.add('top-items');
+    element.classList.add('settings-container');
+    const topItems = document.createElement('div');
+    topItems.classList.add('top-items');
     // ItemsElement_1
     const topItemsElement_1 = document.createElement('div');
     topItemsElement_1.classList.add('line');
@@ -101,7 +104,8 @@ export function SettingsComponent() {
         playAgain();
     });
 
-    element.append(topItemsElement_1, topItemsElement_2, topItemsElement_3, topItemsElement_4, startGameBtnElement);
+    topItems.append(topItemsElement_1, topItemsElement_2, topItemsElement_3, topItemsElement_4);
+    element.append(topItems, startGameBtnElement);
 
     return element;
 }

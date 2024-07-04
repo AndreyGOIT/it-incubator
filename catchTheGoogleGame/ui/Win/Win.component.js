@@ -62,6 +62,7 @@ export function WinComponent() {
     // 4. button "Play Again"
     const playAgainBtnElement = document.createElement('button');
     playAgainBtnElement.textContent = 'Play Again';
+    playAgainBtnElement.classList.add('button');
     playAgainBtnElement.addEventListener('click', () => {
         playAgain();
     });
