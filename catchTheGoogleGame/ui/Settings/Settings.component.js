@@ -53,8 +53,6 @@ export function SettingsComponent() {
     const selectedGridSize = JSON.parse(this.value);
     // Обновляем состояние игры
     setGridSize(selectedGridSize.width, selectedGridSize.height);
-    // Добавьте здесь вызов функции для обновления интерфейса игры с новыми параметрами
-    console.log("Selected grid size:", selectedGridSize);
   });
 
   topItemsElement_1.appendChild(labelElement_1);
@@ -95,7 +93,6 @@ export function SettingsComponent() {
     const selectedPointsToWin = parseInt(this.value, 10);
     // Обновляем состояние игры
     setPointsToWin(selectedPointsToWin);
-    console.log("Selected points to win:", selectedPointsToWin);
   });
 
   topItemsElement_2.appendChild(labelElement_2);
