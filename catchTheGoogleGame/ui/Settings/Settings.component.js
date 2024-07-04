@@ -4,11 +4,14 @@ import {
   setGridSize,
   getPointsToWin,
   setPointsToWin,
+  getPointsToLose,
+  setPointsToLose,
 } from "../../data/state-manager.js";
 
 export function SettingsComponent() {
   const gridSize = getGridSize();
   const pointsToWin = getPointsToWin();
+  const pointsToLose = getPointsToLose();
 
   const element = document.createElement("div");
   element.classList.add("settings-container");
@@ -56,37 +59,8 @@ export function SettingsComponent() {
 
   topItemsElement_1.appendChild(labelElement_1);
   topItemsElement_1.appendChild(selectElement_1);
-  // ItemsElement_2
-  // const topItemsElement_2 = document.createElement("div");
-  // topItemsElement_2.classList.add("line");
-
-  // const labelElement_2 = document.createElement("label");
-  // labelElement_2.append("Points to win");
-
-  // const selectElement_2 = document.createElement("select");
-  // selectElement_2.name = "select";
-  // selectElement_2.id = "02";
-
-  // const optionElement_2_1 = document.createElement("option");
-  // optionElement_2_1.append("20pts");
-  // const optionElement_2_2 = document.createElement("option");
-  // optionElement_2_2.append("40pts");
-  // const optionElement_2_3 = document.createElement("option");
-  // optionElement_2_3.append("50pts");
-  // const optionElement_2_4 = document.createElement("option");
-  // optionElement_2_4.append("60pts");
-  // const optionElement_2_5 = document.createElement("option");
-  // optionElement_2_5.append("80pts");
-
-  // selectElement_2.append(
-  //   optionElement_2_1,
-  //   optionElement_2_2,
-  //   optionElement_2_3,
-  //   optionElement_2_4,
-  //   optionElement_2_5
-  // );
-  // topItemsElement_2.append(labelElement_2, selectElement_2);
   /*-----------------------------------------------------*/
+  // ItemsElement_2
   const topItemsElement_2 = document.createElement("div");
   topItemsElement_2.classList.add("line");
 
@@ -126,36 +100,74 @@ export function SettingsComponent() {
 
   topItemsElement_2.appendChild(labelElement_2);
   topItemsElement_2.appendChild(selectElement_2);
+  /*-----------------------------------------------------*/
   // ItemsElement_3
+  // const topItemsElement_3 = document.createElement("div");
+  // topItemsElement_3.classList.add("line");
+
+  // const labelElement_3 = document.createElement("label");
+  // labelElement_3.append("Points to lose");
+
+  // const selectElement_3 = document.createElement("select");
+  // selectElement_3.name = "select";
+  // selectElement_3.id = "03";
+
+  // const optionElement_3_1 = document.createElement("option");
+  // optionElement_3_1.append("5pts");
+  // const optionElement_3_2 = document.createElement("option");
+  // optionElement_3_2.append("10pts");
+  // const optionElement_3_3 = document.createElement("option");
+  // optionElement_3_3.append("15pts");
+  // const optionElement_3_4 = document.createElement("option");
+  // optionElement_3_4.append("20pts");
+  // const optionElement_3_5 = document.createElement("option");
+  // optionElement_3_5.append("25pts");
+
+  // selectElement_3.append(
+  //   optionElement_3_1,
+  //   optionElement_3_2,
+  //   optionElement_3_3,
+  //   optionElement_3_4,
+  //   optionElement_3_5
+  // );
+  // topItemsElement_3.append(labelElement_3, selectElement_3);
+  /*-----------------------------------------------------*/
   const topItemsElement_3 = document.createElement("div");
   topItemsElement_3.classList.add("line");
 
   const labelElement_3 = document.createElement("label");
-  labelElement_3.append("Points to lose");
+  labelElement_3.textContent = "Points to lose: ";
 
   const selectElement_3 = document.createElement("select");
   selectElement_3.name = "select";
   selectElement_3.id = "03";
 
-  const optionElement_3_1 = document.createElement("option");
-  optionElement_3_1.append("5pts");
-  const optionElement_3_2 = document.createElement("option");
-  optionElement_3_2.append("10pts");
-  const optionElement_3_3 = document.createElement("option");
-  optionElement_3_3.append("15pts");
-  const optionElement_3_4 = document.createElement("option");
-  optionElement_3_4.append("20pts");
-  const optionElement_3_5 = document.createElement("option");
-  optionElement_3_5.append("25pts");
+  const pointsToLoseOptions = [
+    { label: "5 points", value: 5 },
+    { label: "10 points", value: 10 },
+    { label: "15 points", value: 15 },
+    { label: "20 points", value: 20 },
+    { label: "25 points", value: 25 },
+  ];
 
-  selectElement_3.append(
-    optionElement_3_1,
-    optionElement_3_2,
-    optionElement_3_3,
-    optionElement_3_4,
-    optionElement_3_5
-  );
-  topItemsElement_3.append(labelElement_3, selectElement_3);
+  pointsToLoseOptions.forEach((option) => {
+    const optionElement = document.createElement("option");
+    optionElement.textContent = option.label;
+    optionElement.value = option.value;
+    selectElement_3.appendChild(optionElement);
+  });
+
+  selectElement_3.value = pointsToLose;
+
+  selectElement_3.addEventListener("change", function () {
+    const selectedPointsToLose = parseInt(this.value, 10);
+    setPointsToLose(selectedPointsToLose);
+    console.log("Selected points to lose:", selectedPointsToLose);
+  });
+
+  topItemsElement_3.appendChild(labelElement_3);
+  topItemsElement_3.appendChild(selectElement_3);
+  /*-----------------------------------------------------*/
   // ItemsElement_4 / toggle slider
   const topItemsElement_4 = document.createElement("div");
   topItemsElement_4.classList.add("switch-button");
