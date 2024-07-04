@@ -102,36 +102,6 @@ export function SettingsComponent() {
   topItemsElement_2.appendChild(selectElement_2);
   /*-----------------------------------------------------*/
   // ItemsElement_3
-  // const topItemsElement_3 = document.createElement("div");
-  // topItemsElement_3.classList.add("line");
-
-  // const labelElement_3 = document.createElement("label");
-  // labelElement_3.append("Points to lose");
-
-  // const selectElement_3 = document.createElement("select");
-  // selectElement_3.name = "select";
-  // selectElement_3.id = "03";
-
-  // const optionElement_3_1 = document.createElement("option");
-  // optionElement_3_1.append("5pts");
-  // const optionElement_3_2 = document.createElement("option");
-  // optionElement_3_2.append("10pts");
-  // const optionElement_3_3 = document.createElement("option");
-  // optionElement_3_3.append("15pts");
-  // const optionElement_3_4 = document.createElement("option");
-  // optionElement_3_4.append("20pts");
-  // const optionElement_3_5 = document.createElement("option");
-  // optionElement_3_5.append("25pts");
-
-  // selectElement_3.append(
-  //   optionElement_3_1,
-  //   optionElement_3_2,
-  //   optionElement_3_3,
-  //   optionElement_3_4,
-  //   optionElement_3_5
-  // );
-  // topItemsElement_3.append(labelElement_3, selectElement_3);
-  /*-----------------------------------------------------*/
   const topItemsElement_3 = document.createElement("div");
   topItemsElement_3.classList.add("line");
 
@@ -193,7 +163,7 @@ export function SettingsComponent() {
   startGameBtnElement.addEventListener("click", () => {
     playAgain();
   });
-
+//-----------------------------------------------------*/
   topItems.append(
     topItemsElement_1,
     topItemsElement_2,
