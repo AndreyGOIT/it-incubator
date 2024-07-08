@@ -45,8 +45,21 @@ function _setGooglePosition(newX, newY) {
 function _moveGoogleToRandomPosition() {
   const newX = _getRandomInt(_state.settings.gridSize.width);
   const newY = _getRandomInt(_state.settings.gridSize.height);
+  const player1_x = getPlayerPositions()[0].x;
+  const player1_y = getPlayerPositions()[0].y;
+  const player2_x = getPlayerPositions()[1].x;
+  const player2_y = getPlayerPositions()[1].y;
 
   if (newX === getGooglePosition().x && newY === getGooglePosition().y) {
+    _moveGoogleToRandomPosition();
+    return;
+  }
+  // todo: сделать через цикл for
+  if (newX === player1_x && newY === player1_y) {
+    _moveGoogleToRandomPosition();
+    return;
+  }
+  if (newX === player2_x && newY === player2_y) {
     _moveGoogleToRandomPosition();
     return;
   }
