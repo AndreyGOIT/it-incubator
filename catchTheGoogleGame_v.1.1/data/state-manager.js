@@ -3,9 +3,12 @@ import { GAME_STATUSES } from "./costants.js";
 const _state = {
   gameStatus: GAME_STATUSES.SETTINGS,
   points: {
-    miss: 0,
-    catch: 0,
-  },
+    google: 0,
+    players: [
+      {id: 1, value: 0},
+      {id: 2, value: 0}
+      ],
+    },
   settings: {
     pointsToLose: 5,
     pointsToWin: 5,
@@ -14,10 +17,16 @@ const _state = {
       height: 4,
     },
   },
-  googlePosition: {
-    x: 0,
-    y: 0,
-  },
+  positions: {
+    google: {
+      x: 0,
+      y: 0,
+    },
+    players: {
+      "1": {x: 1, y: 1},
+      "2": {x: 2, y: 2}
+    },
+  }
 };
 let _observer = () => {};
 export function setObserver(observer) {
@@ -32,12 +41,12 @@ function _moveGoogleToRandomPosition() {
   const newX = _getRandomInt(_state.settings.gridSize.width);
   const newY = _getRandomInt(_state.settings.gridSize.height);
 
-  if (newX === _state.googlePosition.x && newY === _state.googlePosition.y) {
+  if (newX === getGooglePosition().x && newY === getGooglePosition().y) {
     _moveGoogleToRandomPosition();
     return;
   }
-  _state.googlePosition.x = newX;
-  _state.googlePosition.y = newY;
+  _state.positions.google.x = newX;
+  _state.positions.google.y = newY;
 }
 let _intervalId;
 function _play() {
@@ -52,6 +61,19 @@ function _play() {
     }
     _observer();
   }, 1000);
+}
+
+function _catchGoogle(playerId) {
+  _state.points.catch++;
+  if (_state.points.catch >= _state.settings.pointsToWin) {
+    clearInterval(_intervalId);
+    _state.gameStatus = GAME_STATUSES.WIN;
+  } else {
+    _moveGoogleToRandomPosition();
+    clearInterval(_intervalId);
+    _play();
+  }
+  _observer();
 }
 
 // getter / selector / query / mapper
@@ -69,8 +91,8 @@ export function getGridSize() {
 }
 export function getGooglePosition() {
   return {
-    x: _state.googlePosition.x,
-    y: _state.googlePosition.y,
+    x: _state.positions.google.x,
+    y: _state.positions.google.y,
   };
 }
 // Геттер для pointsToWin
@@ -91,18 +113,6 @@ export function playAgain() {
   _observer();
 }
 
-export function catchGoogle() {
-  _state.points.catch++;
-  if (_state.points.catch >= _state.settings.pointsToWin) {
-    clearInterval(_intervalId);
-    _state.gameStatus = GAME_STATUSES.WIN;
-  } else {
-    _moveGoogleToRandomPosition();
-    clearInterval(_intervalId);
-    _play();
-  }
-  _observer();
-}
 // setter Функция для установки размера сетки
 export function setGridSize(width, height) {
   _state.settings.gridSize.width = width;
