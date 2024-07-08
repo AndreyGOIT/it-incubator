@@ -152,3 +152,7 @@ export function setPointsToWin(points) {
 export function setPointsToLose(points) {
   _state.settings.pointsToLose = points;
 }
+
+export function movePlayer(id, direction) {
+  console.log(id, direction);
+}
