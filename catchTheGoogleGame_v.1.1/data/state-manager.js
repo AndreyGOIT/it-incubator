@@ -37,6 +37,11 @@ function _getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
+function _setGooglePosition(newX, newY) {
+  _state.positions.google.x = newX;
+  _state.positions.google.y = newY;
+}
+
 function _moveGoogleToRandomPosition() {
   const newX = _getRandomInt(_state.settings.gridSize.width);
   const newY = _getRandomInt(_state.settings.gridSize.height);
@@ -45,15 +50,15 @@ function _moveGoogleToRandomPosition() {
     _moveGoogleToRandomPosition();
     return;
   }
-  _state.positions.google.x = newX;
-  _state.positions.google.y = newY;
+  _setGooglePosition(newX, newY);
 }
+
 let _intervalId;
 function _play() {
   _intervalId = setInterval(() => {
-    _state.points.miss++;
+    _state.points.google++;
 
-    if (_state.points.miss >= _state.settings.pointsToLose) {
+    if (_state.points.google >= _state.settings.pointsToLose) {
       clearInterval(_intervalId);
       _state.gameStatus = GAME_STATUSES.LOSE;
     } else {
@@ -63,7 +68,7 @@ function _play() {
   }, 1000);
 }
 
-function _catchGoogle(playerId) {
+export function _catchGoogle(playerId) {
   _state.points.catch++;
   if (_state.points.catch >= _state.settings.pointsToWin) {
     clearInterval(_intervalId);
@@ -79,8 +84,10 @@ function _catchGoogle(playerId) {
 // getter / selector / query / mapper
 export function getPoints() {
   return {
-    miss: _state.points.miss,
-    catch: _state.points.catch,
+    google: _state.points.google,
+    players: _state.points.players.map((points) => {
+      return {...points};
+    }),
   };
 }
 export function getGameStatus() {
@@ -107,8 +114,10 @@ export function getPointsToLose() {
 // setter / command / mutator / side-effect / CQRS
 export function playAgain() {
   _state.gameStatus = GAME_STATUSES.IN_PROGRESS;
-  _state.points.miss = 0;
-  _state.points.catch = 0;
+  _state.points.google = 0;
+  _state.points.players.forEach((points) => {
+    points.value = 0;
+  });
   _play();
   _observer();
 }

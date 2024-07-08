@@ -126,19 +126,19 @@ select {
 .result-container {
     display: flex;
     justify-content: space-between;
-    padding: 12px 36px;
+    padding: 12px 26px;
     border-radius: 30px;
     border: 1px solid #4C5E50;
     background-color: rgba(57, 61, 55, 0.40);
     margin: 36px auto;
     max-width: 376px;
     min-width: 376px;
-    column-gap: 30px;
+    column-gap: 20px;
 }
 
 .result-block {
     display: inline-flex;
-    gap: 24px;
+    gap: 10px;
     justify-content: space-between;
 }
 
