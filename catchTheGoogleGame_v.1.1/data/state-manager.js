@@ -4,10 +4,10 @@ const _state = {
   gameStatus: GAME_STATUSES.SETTINGS,
   points: {
     google: 0,
-    players: [
-      {id: 1, value: 0},
-      {id: 2, value: 0}
-      ],
+    players: {
+     "1": {value: 0},
+     "2": {value: 0}
+    },
     },
   settings: {
     pointsToLose: 5,
@@ -68,7 +68,7 @@ function _play() {
   }, 1000);
 }
 
-export function _catchGoogle(playerId) {
+function _catchGoogle(playerId) {
   _state.points.catch++;
   if (_state.points.catch >= _state.settings.pointsToWin) {
     clearInterval(_intervalId);
@@ -85,7 +85,7 @@ export function _catchGoogle(playerId) {
 export function getPoints() {
   return {
     google: _state.points.google,
-    players: _state.points.players.map((points) => {
+    players: Object.values(_state.points.players).map((points) => {
       return {...points};
     }),
   };
@@ -115,7 +115,7 @@ export function getPointsToLose() {
 export function playAgain() {
   _state.gameStatus = GAME_STATUSES.IN_PROGRESS;
   _state.points.google = 0;
-  _state.points.players.forEach((points) => {
+  Object.values(_state.points.players).forEach((points) => {
     points.value = 0;
   });
   _play();

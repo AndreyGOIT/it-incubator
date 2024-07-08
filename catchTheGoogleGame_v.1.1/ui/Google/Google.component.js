@@ -1,10 +1,9 @@
-import { _catchGoogle } from '../../data/state-manager.js';
 
 export function GoogleComponent() {
     const element = document.createElement('img');
     element.src = 'assets/google-color-svgrepo-com 1.png';
     element.addEventListener('click', () => {
-        _catchGoogle();
+        // _catchGoogle();
     });
     return element;
 }
