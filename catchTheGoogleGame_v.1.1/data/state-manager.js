@@ -5,8 +5,8 @@ const _state = {
   points: {
     google: 0,
     players: {
-     "1": {value: 0},
-     "2": {value: 0}
+     "1": {id: 1, value: 0},
+     "2": {id: 2, value: 0}
     },
     },
   settings: {
@@ -69,8 +69,9 @@ function _play() {
 }
 
 function _catchGoogle(playerId) {
-  _state.points.catch++;
-  if (_state.points.catch >= _state.settings.pointsToWin) {
+  const points = _state.points.players[playerId];
+  points.value++;
+  if (points.value >= _state.settings.pointsToWin) {
     clearInterval(_intervalId);
     _state.gameStatus = GAME_STATUSES.WIN;
   } else {
@@ -101,6 +102,11 @@ export function getGooglePosition() {
     x: _state.positions.google.x,
     y: _state.positions.google.y,
   };
+}
+export function getPlayerPositions() {
+  return Object.values(_state.positions.players).map((position) => {
+    return {...position};
+  });
 }
 // Геттер для pointsToWin
 export function getPointsToWin() {
