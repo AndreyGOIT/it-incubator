@@ -1,4 +1,4 @@
-import { GAME_STATUSES } from "./costants.js";
+import { GAME_STATUSES, DIRECTIONS } from "./costants.js";
 // todo: change points structure
 const _state = {
   gameStatus: GAME_STATUSES.SETTINGS,
@@ -154,5 +154,28 @@ export function setPointsToLose(points) {
 }
 
 export function movePlayer(id, direction) {
-  console.log(id, direction);
+  const position = _state.positions.players[id];
+  const newPosition = {...position}
+
+  const updater = {
+    [DIRECTIONS.UP]: () => {
+      newPosition.y -= 1;
+    },
+    [DIRECTIONS.DOWN]: () => {
+      newPosition.y += 1;
+    },
+    [DIRECTIONS.LEFT]: () => {
+      newPosition.x -= 1;
+    },
+    [DIRECTIONS.RIGHT]: () => {
+      newPosition.x += 1;
+    },
+  };
+  updater[direction]();
+
+  // if (!isWithinBounds(newPosition)) return;
+  // if (!isCellFree(newPosition)) return;
+
+  _state.positions.players[id] = newPosition;
+  _observer();
 }
