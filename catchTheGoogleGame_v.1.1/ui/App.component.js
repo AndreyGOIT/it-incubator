@@ -5,6 +5,7 @@ import { getGameStatus } from '../data/state-manager.js';
 import { GAME_STATUSES } from '../data/costants.js';
 import { WinComponent } from './Win/Win.component.js';
 import { SettingsComponent } from './Settings/Settings.component.js';
+import { stopVoiceRecognition } from './controls.js';
 
 export function AppComponent() {
     const element = document.createElement('div');
@@ -15,15 +16,16 @@ export function AppComponent() {
         [GAME_STATUSES.WIN]: () => {
             const winElement = WinComponent();
             element.append(winElement);
+            stopVoiceRecognition();
         },
         [GAME_STATUSES.LOSE]: () => {
             const loseElement = LoseComponent();
             element.append(loseElement);
+            stopVoiceRecognition();
         },
         [GAME_STATUSES.SETTINGS]: () => {
             const settingsElement = SettingsComponent();
             element.append(settingsElement);
-            // console.warn('Not implemented yet');
         },
         [GAME_STATUSES.IN_PROGRESS]: () => {
             const resultPanelElement = ResultPanelComponent();
