@@ -45,22 +45,25 @@ function _setGooglePosition(newX, newY) {
 function _moveGoogleToRandomPosition() {
   const newX = _getRandomInt(_state.settings.gridSize.width);
   const newY = _getRandomInt(_state.settings.gridSize.height);
-  const player1coord = getPlayerPositions()[0];
-  const player2coord = getPlayerPositions()[1];
+  // const player1coord = getPlayerPositions()[0];
+  // const player2coord = getPlayerPositions()[1];
 
   if (newX === getGooglePosition().x && newY === getGooglePosition().y) {
     _moveGoogleToRandomPosition();
     return;
   }
-  // todo: сделать через цикл for
-  if (newX === player1coord.x && newY === player1coord.y) {
+  if (_isCellOccupiedByPlayer({x: newX, y: newY})) {
     _moveGoogleToRandomPosition();
     return;
-  }
-  if (newX === player2coord.x && newY === player2coord.y) {
-    _moveGoogleToRandomPosition();
-    return;
-  }
+  };
+  // if (newX === player1coord.x && newY === player1coord.y) {
+  //   _moveGoogleToRandomPosition();
+  //   return;
+  // }
+  // if (newX === player2coord.x && newY === player2coord.y) {
+  //   _moveGoogleToRandomPosition();
+  //   return;
+  // }
   _setGooglePosition(newX, newY);
 }
 
@@ -173,16 +176,27 @@ export function movePlayer(id, direction) {
   };
   updater[direction]();
 // guard / validator / checker
-  if (!isWithinBounds(newPosition)) return;
-  // if (!isCellFree(newPosition)) return;
+  if (!_isWithinBounds(newPosition)) return;
+  if (_isCellOccupiedByPlayer(newPosition)) return;
 
   _state.positions.players[id] = newPosition;
   _observer();
 }
 
-function isWithinBounds(position) {
+function _isWithinBounds(position) {
   const { x, y } = position;
   if (x < 0 || x >= _state.settings.gridSize.width) return false;
   if (y < 0 || y >= _state.settings.gridSize.height) return false;
   return true;
+}
+function _isCellOccupiedByPlayer({x,y}) {
+  const player1coord = getPlayerPositions()[0];
+  const player2coord = getPlayerPositions()[1];
+  if (x === player1coord.x && y === player1coord.y) {
+    return true;
+  }
+  if (x === player2coord.x && y === player2coord.y) {
+    return true;
+  }
+  return false;
 }
