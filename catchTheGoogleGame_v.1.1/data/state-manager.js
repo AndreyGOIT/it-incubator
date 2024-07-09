@@ -71,7 +71,7 @@ function _play() {
       _moveGoogleToRandomPosition();
     }
     _observer();
-  }, 1000);
+  }, 2000);
 }
 
 function _catchGoogle(playerId) {
@@ -170,6 +170,11 @@ export function movePlayer(id, direction) {
 // guard / validator / checker
   if (!_isWithinBounds(newPosition)) return;
   if (_isCellOccupiedByPlayer(newPosition)) return;
+
+  if (_isCellOccupiedByGoogle(newPosition)) {
+    _catchGoogle(id);
+    return;
+  }
 
   _state.positions.players[id] = newPosition;
   _observer();
