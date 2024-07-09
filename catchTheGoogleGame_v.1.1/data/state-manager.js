@@ -45,10 +45,9 @@ function _setGooglePosition(newX, newY) {
 function _moveGoogleToRandomPosition() {
   const newX = _getRandomInt(_state.settings.gridSize.width);
   const newY = _getRandomInt(_state.settings.gridSize.height);
-  // const player1coord = getPlayerPositions()[0];
-  // const player2coord = getPlayerPositions()[1];
 
-  if (newX === getGooglePosition().x && newY === getGooglePosition().y) {
+
+  if (_isCellOccupiedByGoogle({x: newX, y: newY})) {
     _moveGoogleToRandomPosition();
     return;
   }
@@ -56,14 +55,7 @@ function _moveGoogleToRandomPosition() {
     _moveGoogleToRandomPosition();
     return;
   };
-  // if (newX === player1coord.x && newY === player1coord.y) {
-  //   _moveGoogleToRandomPosition();
-  //   return;
-  // }
-  // if (newX === player2coord.x && newY === player2coord.y) {
-  //   _moveGoogleToRandomPosition();
-  //   return;
-  // }
+
   _setGooglePosition(newX, newY);
 }
 
@@ -189,6 +181,7 @@ function _isWithinBounds(position) {
   if (y < 0 || y >= _state.settings.gridSize.height) return false;
   return true;
 }
+
 function _isCellOccupiedByPlayer({x,y}) {
   const player1coord = getPlayerPositions()[0];
   const player2coord = getPlayerPositions()[1];
@@ -196,6 +189,13 @@ function _isCellOccupiedByPlayer({x,y}) {
     return true;
   }
   if (x === player2coord.x && y === player2coord.y) {
+    return true;
+  }
+  return false;
+}
+
+function _isCellOccupiedByGoogle({x,y}) {
+  if (x === getGooglePosition().x && y === getGooglePosition().y) {
     return true;
   }
   return false;
