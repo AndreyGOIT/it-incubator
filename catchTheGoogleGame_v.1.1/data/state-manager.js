@@ -172,10 +172,17 @@ export function movePlayer(id, direction) {
     },
   };
   updater[direction]();
-
-  // if (!isWithinBounds(newPosition)) return;
+// guard / validator / checker
+  if (!isWithinBounds(newPosition)) return;
   // if (!isCellFree(newPosition)) return;
 
   _state.positions.players[id] = newPosition;
   _observer();
+}
+
+function isWithinBounds(position) {
+  const { x, y } = position;
+  if (x < 0 || x >= _state.settings.gridSize.width) return false;
+  if (y < 0 || y >= _state.settings.gridSize.height) return false;
+  return true;
 }
