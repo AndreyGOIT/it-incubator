@@ -31,6 +31,12 @@ const _state = {
 let _observers = [];
 export function setObserver(observer) {
   _observers.push(observer);
+  console.log(_observers);
+}
+
+export function removeObserver(observer) {
+  _observers = _observers.filter((item) => item !== observer);
+  console.log(_observers);
 }
 
 function _getRandomInt(max) {

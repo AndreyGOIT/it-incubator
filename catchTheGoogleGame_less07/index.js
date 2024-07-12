@@ -1,4 +1,4 @@
-import { setObserver } from './data/state-manager.js';
+import { removeObserver, setObserver } from './data/state-manager.js';
 import {AppComponent} from './ui/App.component.js';
 import { bindKeyboardsControlsForMovingPlayer1, bindVoiceRecognitionControlsForMovingPlayer2 } from './ui/controls.js';
 
@@ -14,6 +14,13 @@ render();
 
 bindKeyboardsControlsForMovingPlayer1();
 
-bindVoiceRecognitionControlsForMovingPlayer2();
+// bindVoiceRecognitionControlsForMovingPlayer2();
 
 setObserver(render);
+
+const logger = () => {console.log('STATE CHANGED')};
+setObserver(logger);
+
+setTimeout(() => {
+    removeObserver(logger);
+},10000)
