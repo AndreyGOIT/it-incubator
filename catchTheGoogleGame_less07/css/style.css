@@ -131,7 +131,6 @@ select {
     border: 1px solid #4C5E50;
     background-color: rgba(57, 61, 55, 0.40);
     margin: 36px auto;
-    max-width: 376px;
     min-width: 376px;
     column-gap: 20px;
 }
@@ -140,14 +139,25 @@ select {
     display: inline-flex;
     gap: 10px;
     justify-content: space-between;
+    align-items: center;
+    /* width: 100%; */
 }
 
 .result-title {
+    flex: 1; /* Растягиваем левый спан */
+    text-align: left; /* Выравнивание текста в левом спане */
     font-size: 18px;
     font-weight: 400;
 }
 
+.result-img {
+    width: 48px;
+    height: 48px;
+}
+
 .result {
+    flex: 1; /* Растягиваем правый спан */
+    text-align: right; /* Выравнивание текста в правом спане */
     font-size: 24px;
     font-weight: 500;
 }

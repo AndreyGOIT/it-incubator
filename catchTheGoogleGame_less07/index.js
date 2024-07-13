@@ -17,10 +17,3 @@ bindKeyboardsControlsForMovingPlayer1();
 // bindVoiceRecognitionControlsForMovingPlayer2();
 
 setObserver(render);
-
-const logger = () => {console.log('STATE CHANGED')};
-setObserver(logger);
-
-setTimeout(() => {
-    removeObserver(logger);
-},10000)
