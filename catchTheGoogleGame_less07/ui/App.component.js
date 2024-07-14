@@ -6,6 +6,7 @@ import { GAME_STATUSES } from '../data/costants.js';
 import { WinComponent } from './Win/Win.component.js';
 import { SettingsComponent } from './Settings/Settings.component.js';
 import { stopVoiceRecognition } from './controls.js';
+import { resetTimer} from './Timer/Timer.js';
 
 export function AppComponent() {
     const element = document.createElement('div');
@@ -17,15 +18,19 @@ export function AppComponent() {
             const winElement = WinComponent();
             element.append(winElement);
             stopVoiceRecognition();
+            resetTimer();
         },
         [GAME_STATUSES.LOSE]: () => {
             const loseElement = LoseComponent();
             element.append(loseElement);
             stopVoiceRecognition();
+            resetTimer();
+            console.log("resetTimer сработал");
         },
         [GAME_STATUSES.SETTINGS]: () => {
             const settingsElement = SettingsComponent();
             element.append(settingsElement);
+            stopVoiceRecognition();
         },
         [GAME_STATUSES.IN_PROGRESS]: () => {
             const resultPanelElement = ResultPanelComponent();
