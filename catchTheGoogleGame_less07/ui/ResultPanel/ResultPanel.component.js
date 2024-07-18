@@ -5,6 +5,7 @@ let timerStarted = false; // Глобальная переменная для о
 let resultTimerElement_4; // Глобальная переменная для хранения ссылки на элемент таймера
 
 export function ResultPanelComponent() {
+  console.log('ResultPanelComponent rendering...');
   const element = document.createElement("div");
   element.classList.add("result-container");
   element.innerHTML = "";

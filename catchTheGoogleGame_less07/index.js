@@ -1,4 +1,4 @@
-import { removeObserver, setObserver } from './data/state-manager.js';
+import { setObserver } from './data/state-manager.js';
 import {AppComponent} from './ui/App.component.js';
 import { bindKeyboardsControlsForMovingPlayer1, bindVoiceRecognitionControlsForMovingPlayer2 } from './ui/controls.js';
 
