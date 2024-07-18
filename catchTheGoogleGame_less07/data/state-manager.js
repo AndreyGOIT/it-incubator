@@ -30,6 +30,7 @@ const _state = {
 let _observers = [];
 export function setObserver(observer) {
   _observers.push(observer);
+  console.log(_observers);
 }
 
 export function removeObserver(observer) {
