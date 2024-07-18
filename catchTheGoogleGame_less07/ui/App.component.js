@@ -12,36 +12,37 @@ export function AppComponent() {
     element.classList.add('container');
 
     const status = getGameStatus();
+    // console.log('Initial Status:', status);
+    setObserver(()=> {
+        const status = getGameStatus();
+        // console.log('Current Status:', status);
+        element.innerHTML = '';
 
-    // setObserver(()=> {
-    //     console.log(status);
-    //     element.innerHTML = '';
-
-    //     const transitions = {
-    //         [GAME_STATUSES.WIN]: () => {
-    //             const winElement = WinComponent();
-    //             element.append(winElement);
-    //             stopVoiceRecognition();
-    //         },
-    //         [GAME_STATUSES.LOSE]: () => {
-    //             const loseElement = LoseComponent();
-    //             element.append(loseElement);
-    //             stopVoiceRecognition();
-    //         },
-    //         [GAME_STATUSES.SETTINGS]: () => {
-    //             const settingsElement = SettingsComponent();
-    //             element.append(settingsElement);
-    //             stopVoiceRecognition();
-    //         },
-    //         [GAME_STATUSES.IN_PROGRESS]: () => {
-    //             const resultPanelElement = ResultPanelComponent();
-    //             element.append(resultPanelElement);
-    //             const gridElement = GridComponent();
-    //             element.append(gridElement);
-    //         },
-    //     }
-    //     transitions[status]();
-    // })
+        const transitions = {
+            [GAME_STATUSES.WIN]: () => {
+                const winElement = WinComponent();
+                element.append(winElement);
+                stopVoiceRecognition();
+            },
+            [GAME_STATUSES.LOSE]: () => {
+                const loseElement = LoseComponent();
+                element.append(loseElement);
+                stopVoiceRecognition();
+            },
+            [GAME_STATUSES.SETTINGS]: () => {
+                const settingsElement = SettingsComponent();
+                element.append(settingsElement);
+                stopVoiceRecognition();
+            },
+            [GAME_STATUSES.IN_PROGRESS]: () => {
+                const resultPanelElement = ResultPanelComponent();
+                element.append(resultPanelElement);
+                const gridElement = GridComponent();
+                element.append(gridElement);
+            },
+        }
+        transitions[status]();
+    })
 
     const transitions = {
         [GAME_STATUSES.WIN]: () => {

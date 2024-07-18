@@ -1,5 +1,4 @@
 import { GAME_STATUSES, DIRECTIONS } from "./costants.js";
-// todo: change points structure
 const _state = {
   gameStatus: GAME_STATUSES.SETTINGS,
   points: {
@@ -31,7 +30,6 @@ const _state = {
 let _observers = [];
 export function setObserver(observer) {
   _observers.push(observer);
-  console.log('observer added:', _observers);
 }
 
 export function removeObserver(observer) {
@@ -136,6 +134,7 @@ export function getPointsToLose() {
 // setter / command / mutator / side-effect / CQRS
 export function playAgain() {
   _state.gameStatus = GAME_STATUSES.IN_PROGRESS;
+  console.log(_state.gameStatus);
   _state.points.google = 0;
   Object.values(_state.points.players).forEach((points) => {
     points.value = 0;
