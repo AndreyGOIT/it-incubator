@@ -35,8 +35,8 @@ function render(cellElement, localState) {
   cellElement.innerHTML = "";
 
   const googlePosition = localState.googlePosition;
-  const googleElement = GoogleComponent();
   const playerPosition = localState.playerPosition;
+  const googleElement = GoogleComponent();
   const player1Element = Player1_Component();
   const player2Element = Player2_Component();
   const {x,y} = localState;

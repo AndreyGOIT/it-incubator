@@ -27,15 +27,22 @@ const _state = {
     },
   }
 };
+
+function notifyObservers() {
+  _observers.forEach((observer) => {
+    observer();
+  });
+};
+
 let _observers = [];
 export function setObserver(observer) {
   _observers.push(observer);
-  console.log(_observers);
+  // console.log(_observers);
 }
 
 export function removeObserver(observer) {
   _observers = _observers.filter((item) => item !== observer);
-  console.log('observer removed:', _observers);
+  // console.log('observer removed:', _observers);
 }
 
 function _getRandomInt(max) {
@@ -75,9 +82,7 @@ function _play() {
     } else {
       _moveGoogleToRandomPosition();
     }
-    _observers.forEach((observer) => {
-      observer();
-    });
+    notifyObservers();
   }, 2000);
 }
 
@@ -92,9 +97,7 @@ function _catchGoogle(playerId) {
     clearInterval(_intervalId);
     _play();
   }
-  _observers.forEach((observer) => {
-    observer();
-  });
+  notifyObservers();
 }
 
 // getter / selector / query / mapper
@@ -141,9 +144,7 @@ export function playAgain() {
     points.value = 0;
   });
   _play();
-  _observers.forEach((observer) => {
-    observer();
-  });
+  notifyObservers();
 }
 
 // setter Функция для установки размера сетки
@@ -189,9 +190,7 @@ export function movePlayer(id, direction) {
   }
 
   _state.positions.players[id] = newPosition;
-  _observers.forEach((observer) => {
-    observer();
-  });
+  notifyObservers();
 }
 
 function _isWithinBounds(position) {
