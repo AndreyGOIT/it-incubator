@@ -2,7 +2,7 @@ import { ResultPanelComponent } from "./ResultPanel/ResultPanel.component.js";
 import { LoseComponent } from "./Lose/Lose.component.js";
 import { GridComponent } from "./Grid/Grid.component.js";
 import { getGameStatus, setObserver } from "../data/state-manager.js";
-import { GAME_STATUSES } from "../data/costants.js";
+import { DOMAIN_EVENTS, GAME_STATUSES } from "../data/costants.js";
 import { WinComponent } from "./Win/Win.component.js";
 import { SettingsComponent } from "./Settings/Settings.component.js";
 import { stopVoiceRecognition } from "./controls.js";
@@ -11,29 +11,21 @@ export function AppComponent() {
   const element = document.createElement("div");
   element.classList.add("container");
 
-  const localState = {
-    status: getGameStatus(),
-  };
-  // console.log('Initial Status:', status);
-  setObserver(() => {
-    const currentStatus = getGameStatus();
-    if (currentStatus === localState.status) return;
-    // console.log('Current Status:', currentStatus);
-    localState.status = currentStatus;
+  setObserver((e) => {
+    if (e.type !== DOMAIN_EVENTS.STATUS_CHANGED) return;
 
-    element.innerHTML = "";
-
-    render(element, localState);
+    render(element);
   });
 
-  render(element, localState);
+  render(element);
 
   return element;
 }
 
-function render(element, localState) {
+function render(element) {
   element.innerHTML = "";
 
+  const gameStatus = getGameStatus();
   const transitions = {
     [GAME_STATUSES.WIN]: () => {
       const winElement = WinComponent();
@@ -57,5 +49,5 @@ function render(element, localState) {
       element.append(gridElement);
     },
   };
-  transitions[localState.status]();
+  transitions[gameStatus]();
 }

@@ -1,13 +1,13 @@
-import { GAME_STATUSES, DIRECTIONS } from "./costants.js";
+import { GAME_STATUSES, DIRECTIONS, DOMAIN_EVENTS } from "./costants.js";
 const _state = {
   gameStatus: GAME_STATUSES.SETTINGS,
   points: {
     google: 0,
     players: {
-     "1": {id: 1, value: 0},
-     "2": {id: 2, value: 0}
+      1: { id: 1, value: 0 },
+      2: { id: 2, value: 0 },
     },
-    },
+  },
   settings: {
     pointsToLose: 5,
     pointsToWin: 5,
@@ -22,17 +22,20 @@ const _state = {
       y: 0,
     },
     players: {
-      "1": {x: 1, y: 1},
-      "2": {x: 2, y: 2}
+      1: { x: 1, y: 1 },
+      2: { x: 2, y: 2 },
     },
-  }
+  },
 };
 
-function notifyObservers() {
+function notifyObservers(type, payload = {} ) {
+  console.log(type);
+  const event = { type, payload };
+
   _observers.forEach((observer) => {
-    observer();
+    observer(event);
   });
-};
+}
 
 let _observers = [];
 export function setObserver(observer) {
@@ -58,15 +61,14 @@ function _moveGoogleToRandomPosition() {
   const newX = _getRandomInt(_state.settings.gridSize.width);
   const newY = _getRandomInt(_state.settings.gridSize.height);
 
-
-  if (_isCellOccupiedByGoogle({x: newX, y: newY})) {
+  if (_isCellOccupiedByGoogle({ x: newX, y: newY })) {
     _moveGoogleToRandomPosition();
     return;
   }
-  if (_isCellOccupiedByPlayer({x: newX, y: newY})) {
+  if (_isCellOccupiedByPlayer({ x: newX, y: newY })) {
     _moveGoogleToRandomPosition();
     return;
-  };
+  }
 
   _setGooglePosition(newX, newY);
 }
@@ -75,29 +77,41 @@ let _intervalId;
 function _play() {
   _intervalId = setInterval(() => {
     _state.points.google++;
+    notifyObservers(DOMAIN_EVENTS.SCORES_CHANGED);
 
     if (_state.points.google >= _state.settings.pointsToLose) {
       clearInterval(_intervalId);
       _state.gameStatus = GAME_STATUSES.LOSE;
+      notifyObservers(DOMAIN_EVENTS.STATUS_CHANGED);
     } else {
+      const payload = {
+        oldPosition: getGooglePosition(),
+        newPosition: null
+      }
+
       _moveGoogleToRandomPosition();
+      payload.newPosition = getGooglePosition();
+
+      notifyObservers(DOMAIN_EVENTS.GOOGLE_JUMPED, payload);
     }
-    notifyObservers();
   }, 2000);
 }
 
 function _catchGoogle(playerId) {
   const points = _state.points.players[playerId];
   points.value++;
+  notifyObservers(DOMAIN_EVENTS.SCORES_CHANGED);
   if (points.value >= _state.settings.pointsToWin) {
     clearInterval(_intervalId);
     _state.gameStatus = GAME_STATUSES.WIN;
+    notifyObservers(DOMAIN_EVENTS.STATUS_CHANGED);
   } else {
     _moveGoogleToRandomPosition();
+    notifyObservers(DOMAIN_EVENTS.GOOGLE_JUMPED);
     clearInterval(_intervalId);
     _play();
   }
-  notifyObservers();
+  // notifyObservers();
 }
 
 // getter / selector / query / mapper
@@ -105,7 +119,7 @@ export function getPoints() {
   return {
     google: _state.points.google,
     players: Object.values(_state.points.players).map((points) => {
-      return {...points};
+      return { ...points };
     }),
   };
 }
@@ -123,7 +137,7 @@ export function getGooglePosition() {
 }
 export function getPlayerPositions() {
   return Object.values(_state.positions.players).map((position) => {
-    return {...position};
+    return { ...position };
   });
 }
 // Геттер для pointsToWin
@@ -138,13 +152,14 @@ export function getPointsToLose() {
 // setter / command / mutator / side-effect / CQRS
 export function playAgain() {
   _state.gameStatus = GAME_STATUSES.IN_PROGRESS;
-  console.log(_state.gameStatus);
+  notifyObservers(DOMAIN_EVENTS.STATUS_CHANGED);
+  // console.log(_state.gameStatus);
   _state.points.google = 0;
   Object.values(_state.points.players).forEach((points) => {
     points.value = 0;
   });
+  notifyObservers(DOMAIN_EVENTS.SCORES_CHANGED);
   _play();
-  notifyObservers();
 }
 
 // setter Функция для установки размера сетки
@@ -163,7 +178,7 @@ export function setPointsToLose(points) {
 
 export function movePlayer(id, direction) {
   const position = _state.positions.players[id];
-  const newPosition = {...position}
+  const newPosition = { ...position };
 
   const updater = {
     [DIRECTIONS.UP]: () => {
@@ -180,7 +195,7 @@ export function movePlayer(id, direction) {
     },
   };
   updater[direction]();
-// guard / validator / checker
+  // guard / validator / checker
   if (!_isWithinBounds(newPosition)) return;
   if (_isCellOccupiedByPlayer(newPosition)) return;
 
@@ -190,7 +205,7 @@ export function movePlayer(id, direction) {
   }
 
   _state.positions.players[id] = newPosition;
-  notifyObservers();
+  notifyObservers(DOMAIN_EVENTS[`PLAYER${id}_MOVED`]);
 }
 
 function _isWithinBounds(position) {
@@ -200,7 +215,7 @@ function _isWithinBounds(position) {
   return true;
 }
 
-function _isCellOccupiedByPlayer({x,y}) {
+function _isCellOccupiedByPlayer({ x, y }) {
   const player1coord = getPlayerPositions()[0];
   const player2coord = getPlayerPositions()[1];
   if (x === player1coord.x && y === player1coord.y) {
@@ -212,7 +227,7 @@ function _isCellOccupiedByPlayer({x,y}) {
   return false;
 }
 
-function _isCellOccupiedByGoogle({x,y}) {
+function _isCellOccupiedByGoogle({ x, y }) {
   if (x === getGooglePosition().x && y === getGooglePosition().y) {
     return true;
   }

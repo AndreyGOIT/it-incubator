@@ -1,3 +1,4 @@
+import { DOMAIN_EVENTS } from "../../data/costants.js";
 import {
   getGooglePosition,
   getPlayerPositions,
@@ -10,7 +11,7 @@ import { Player2_Component } from "../Player_2/Player_2.component.js";
 export function CellComponent(x, y) {
   const cellElement = document.createElement("td");
   cellElement.classList.add("cell");
-  console.log("CellComponent rendering:", x, y);
+//   console.log("CellComponent rendering:", x, y);
 
   const localState = {
     googlePosition: getGooglePosition(),
@@ -19,11 +20,25 @@ export function CellComponent(x, y) {
     y
   };
 
-  setObserver(() => {
-    localState.googlePosition = getGooglePosition();
-    localState.playerPosition = getPlayerPositions();
-
-    render(cellElement, localState);
+  setObserver((e) => {
+    if (e.type !== DOMAIN_EVENTS.GOOGLE_JUMPED && 
+        e.type !== DOMAIN_EVENTS.PLAYER1_MOVED && 
+        e.type !== DOMAIN_EVENTS.PLAYER2_MOVED
+    ) return;
+    // должны рендериться, если новые координаты равны мне или старые координаты равны мне
+    const newGooglePosition = e.payload.newPosition;
+    const oldGooglePosition = e.payload.oldPosition;
+    
+    if (newGooglePosition.x === localState.x && newGooglePosition.y === localState.y) {
+        localState.googlePosition = newGooglePosition;
+        localState.playerPosition = getPlayerPositions();
+        render(cellElement, localState)
+    };
+    if (oldGooglePosition.x === localState.x && oldGooglePosition.y === localState.y) {
+        localState.googlePosition = newGooglePosition;
+        localState.playerPosition = getPlayerPositions();
+        render(cellElement, localState)
+    };
   });
 
   render(cellElement, localState);
@@ -40,6 +55,7 @@ function render(cellElement, localState) {
   const player1Element = Player1_Component();
   const player2Element = Player2_Component();
   const {x,y} = localState;
+  console.log("CellComponent rendering:", x, y);
 
   if (googlePosition.x === x && googlePosition.y === y) {
     cellElement.append(googleElement);
