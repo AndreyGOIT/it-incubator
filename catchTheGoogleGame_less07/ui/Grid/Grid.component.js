@@ -12,29 +12,24 @@ export function GridComponent() {
     const tableBodyElement = document.createElement('tbody');
 
     const gridSize = getGridSize();
-    // const googlePosition = getGooglePosition();
-    // const googleElement = GoogleComponent();
-    // const playerPosition = getPlayerPositions();
-    // const player1Element = Player1_Component();
-    // const player2Element = Player2_Component();
+
+    const localState = {
+        childrenCleanups: []
+    }
     
     for (let y = 0; y < gridSize.height; y++) {
         const rowElement = document.createElement('tr');
         for (let x = 0; x < gridSize.width; x++) {
-            const cellElement = CellComponent(x,y);
-            // if (googlePosition.x === x && googlePosition.y === y) {
-            //     cellElement.append(googleElement);
-            // }
-            // if (playerPosition[0].x === x && playerPosition[0].y === y) {
-            //     cellElement.append(player1Element);
-            // }
-            // if (playerPosition[1].x === x && playerPosition[1].y === y) {
-            //     cellElement.append(player2Element);
-            // }
-            rowElement.append(cellElement);
+            const cellWrapper = CellComponent(x,y);
+            
+            rowElement.append(cellWrapper.cellElement);
+            localState.childrenCleanups.push(cellWrapper.cleanup);
         }
         tableBodyElement.append(rowElement);
     }
     element.append(tableBodyElement);
-    return element;
+    return {element, cleanup: () => {
+        localState.childrenCleanups.forEach(cf => cf());
+        localState.childrenCleanups = []
+    }};
 }

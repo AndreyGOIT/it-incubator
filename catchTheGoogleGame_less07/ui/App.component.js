@@ -11,42 +11,65 @@ export function AppComponent() {
   const element = document.createElement("div");
   element.classList.add("container");
 
+  const localState = {
+    cleanups: []
+  }
+
   setObserver((e) => {
     if (e.type !== DOMAIN_EVENTS.STATUS_CHANGED) return;
 
-    render(element);
+    render(element,localState);
   });
 
-  render(element);
+  render(element, localState);
 
   return element;
 }
 
-function render(element) {
+function render(element, localState) {
+//   localState.cleanups.forEach(cf => cf());
+  localState.cleanups.forEach(cf => {
+    if (typeof cf === 'function') {
+      cf();
+    } else {
+      console.error('Expected function but found:', cf);
+    }
+  });
+  localState.cleanups = [];
+
   element.innerHTML = "";
 
   const gameStatus = getGameStatus();
   const transitions = {
     [GAME_STATUSES.WIN]: () => {
-      const winElement = WinComponent();
-      element.append(winElement);
+      const winWrapper = WinComponent();
+      element.append(winWrapper.element);
       stopVoiceRecognition();
+
+      localState.cleanups.push(winWrapper.cleanup);
     },
     [GAME_STATUSES.LOSE]: () => {
-      const loseElement = LoseComponent();
-      element.append(loseElement);
+      const loseWrapper = LoseComponent();
+      element.append(loseWrapper.element);
       stopVoiceRecognition();
+
+      localState.cleanups.push(loseWrapper.cleanup);
     },
     [GAME_STATUSES.SETTINGS]: () => {
-      const settingsElement = SettingsComponent();
-      element.append(settingsElement);
+      const settingsWrapper = SettingsComponent();
+      element.append(settingsWrapper.element);
       stopVoiceRecognition();
+
+      localState.cleanups.push(settingsWrapper.cleanup);
     },
     [GAME_STATUSES.IN_PROGRESS]: () => {
-      const resultPanelElement = ResultPanelComponent();
-      element.append(resultPanelElement);
-      const gridElement = GridComponent();
-      element.append(gridElement);
+      const resultPanelWrapper = ResultPanelComponent();
+      element.append(resultPanelWrapper.element);
+      const gridWrapper = GridComponent();
+      element.append(gridWrapper.element);
+
+      localState.cleanups.push(resultPanelWrapper.cleanup);
+      localState.cleanups.push(gridWrapper.cleanup);
     },
   };
   transitions[gameStatus]();

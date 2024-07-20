@@ -2,6 +2,7 @@ import { DOMAIN_EVENTS } from "../../data/costants.js";
 import {
   getGooglePosition,
   getPlayerPositions,
+  removeObserver,
   setObserver,
 } from "../../data/state-manager.js";
 import { GoogleComponent } from "../Google/Google.component.js";
@@ -20,7 +21,7 @@ export function CellComponent(x, y) {
     y
   };
 
-  setObserver((e) => {
+  const handler = (e) => {
     if (e.type !== DOMAIN_EVENTS.GOOGLE_JUMPED && 
         e.type !== DOMAIN_EVENTS.PLAYER1_MOVED && 
         e.type !== DOMAIN_EVENTS.PLAYER2_MOVED
@@ -28,7 +29,7 @@ export function CellComponent(x, y) {
     // должны рендериться, если новые координаты равны мне или старые координаты равны мне
     const newGooglePosition = e.payload.newPosition;
     const oldGooglePosition = e.payload.oldPosition;
-    
+
     if (newGooglePosition.x === localState.x && newGooglePosition.y === localState.y) {
         localState.googlePosition = newGooglePosition;
         localState.playerPosition = getPlayerPositions();
@@ -39,11 +40,12 @@ export function CellComponent(x, y) {
         localState.playerPosition = getPlayerPositions();
         render(cellElement, localState)
     };
-  });
+  }
+  setObserver(handler);
 
   render(cellElement, localState);
 
-  return cellElement;
+  return {cellElement, cleanup: () => {removeObserver(handler)}};
 }
 
 function render(cellElement, localState) {

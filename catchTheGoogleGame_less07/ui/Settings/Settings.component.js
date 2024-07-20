@@ -147,7 +147,7 @@ export function SettingsComponent() {
   );
   element.append(topItems, startGameBtnElement);
 
-  return element;
+  return {element, cleanup: () => {}};
 }
 
 function toggleSound() {

@@ -40,12 +40,12 @@ function notifyObservers(type, payload = {} ) {
 let _observers = [];
 export function setObserver(observer) {
   _observers.push(observer);
-  // console.log(_observers);
+  console.log('Observers array:', _observers);
 }
 
 export function removeObserver(observer) {
   _observers = _observers.filter((item) => item !== observer);
-  // console.log('observer removed:', _observers);
+  console.log('observer removed:', _observers);
 }
 
 function _getRandomInt(max) {
