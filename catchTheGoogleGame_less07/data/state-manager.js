@@ -84,17 +84,21 @@ function _play() {
       _state.gameStatus = GAME_STATUSES.LOSE;
       notifyObservers(DOMAIN_EVENTS.STATUS_CHANGED);
     } else {
-      const payload = {
-        oldPosition: getGooglePosition(),
-        newPosition: null
-      }
-
-      _moveGoogleToRandomPosition();
-      payload.newPosition = getGooglePosition();
-
-      notifyObservers(DOMAIN_EVENTS.GOOGLE_JUMPED, payload);
+      _moveGoogleAndNotifyObservers()
     }
   }, 2000);
+};
+
+function _moveGoogleAndNotifyObservers() {
+  const payload = {
+    oldPosition: getGooglePosition(),
+    newPosition: null
+  }
+
+  _moveGoogleToRandomPosition();
+  payload.newPosition = getGooglePosition();
+
+  notifyObservers(DOMAIN_EVENTS.GOOGLE_JUMPED, payload);
 }
 
 function _catchGoogle(playerId) {
@@ -106,13 +110,11 @@ function _catchGoogle(playerId) {
     _state.gameStatus = GAME_STATUSES.WIN;
     notifyObservers(DOMAIN_EVENTS.STATUS_CHANGED);
   } else {
-    _moveGoogleToRandomPosition();
-    notifyObservers(DOMAIN_EVENTS.GOOGLE_JUMPED);
+    _moveGoogleAndNotifyObservers();
     clearInterval(_intervalId);
     _play();
   }
-  // notifyObservers();
-}
+};
 
 // getter / selector / query / mapper
 export function getPoints() {
@@ -204,8 +206,13 @@ export function movePlayer(id, direction) {
     return;
   }
 
+  const payload = {
+    oldPosition: _state.positions.players[id],
+    newPosition: newPosition
+  }
   _state.positions.players[id] = newPosition;
-  notifyObservers(DOMAIN_EVENTS[`PLAYER${id}_MOVED`]);
+
+  notifyObservers(DOMAIN_EVENTS[`PLAYER${id}_MOVED`], payload);
 }
 
 function _isWithinBounds(position) {

@@ -68,5 +68,5 @@ export function LoseComponent() {
     // append to modal
     element.append(modalDecorationElement, modalWrapperElement);
     
-    return {element, cleanup: () => {}};;
+    return {element, cleanup: () => {}}
 }
