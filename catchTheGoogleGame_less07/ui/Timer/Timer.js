@@ -7,7 +7,8 @@ export function convertTimeFormat(totalGameTime) {
     const [minutes, seconds] = totalGameTime.split(':').map(Number);
 
     // Преобразуем минуты и секунды в требуемый формат
-    const formattedMinutes = minutes === 0 ? "" : `${minutes}m `;
+    // const formattedMinutes = minutes === 0 ? "" : `${minutes}m `;
+    const formattedMinutes = `${minutes}m `;
     const formattedSeconds = `${seconds}s`;
 
     // Возвращаем результирующую строку

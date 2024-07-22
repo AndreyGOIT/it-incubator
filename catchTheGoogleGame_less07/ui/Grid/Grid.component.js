@@ -1,10 +1,5 @@
-// import { getGooglePosition, getGridSize, getPlayerPositions } from "../../data/state-manager.js";
 import {  getGridSize } from "../../data/state-manager.js";
-// import { GoogleComponent } from "../Google/Google.component.js";
 import { CellComponent } from "../Cell/Cell.component.js";
-// import { Player1_Component } from "../Player_1/Player_1.component.js";
-// import { Player2_Component } from "../Player_2/Player_2.component.js";
-
 
 export function GridComponent() {
     const element = document.createElement('table');

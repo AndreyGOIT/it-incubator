@@ -12,7 +12,6 @@ import { Player2_Component } from "../Player_2/Player_2.component.js";
 export function CellComponent(x, y) {
   const cellElement = document.createElement("td");
   cellElement.classList.add("cell");
-//   console.log("CellComponent rendering:", x, y);
 
   const localState = {
     googlePosition: getGooglePosition(),
