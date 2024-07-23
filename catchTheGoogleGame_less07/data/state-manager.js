@@ -89,6 +89,10 @@ function _play() {
   }, 2000);
 };
 
+/**
+ * The function `_moveGoogleAndNotifyObservers` moves the Google element to a random position and
+ * notifies observers about the change in position.
+ */
 function _moveGoogleAndNotifyObservers() {
   const payload = {
     oldPosition: getGooglePosition(),
