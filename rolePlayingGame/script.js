@@ -104,9 +104,22 @@ function goCave() {
   update(locations[2]);
 }
 
-function fightDragon() {
-  console.log("Fighting dragon.");
+function fightSlime() {
+  fighting = 0;
+  goFight()
 }
+
+function fightBeast() {
+  fighting = 1;
+  goFight();
+}
+
+function fightDragon() {
+  fighting = 2;
+  goFight();
+}
+
+function goFight() {}
 
 function buyHealth() {
   if (gold >= 10) {
@@ -150,5 +163,4 @@ function sellWeapon() {
   }
 };
 
-function fightSlime() {}
-function fightBeast() {}
+
