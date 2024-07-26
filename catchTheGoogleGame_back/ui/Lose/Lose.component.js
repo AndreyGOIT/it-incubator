@@ -1,4 +1,4 @@
-import { getPoints, playAgain } from '../../data/state-manager.js';
+import { getPoints, playAgain } from '../../data/state-manager.proxy.js';
 import { totalGameTime, convertTimeFormat } from '../Timer/Timer.js';
 
 export function LoseComponent() {

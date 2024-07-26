@@ -7,7 +7,7 @@ import {
   setPointsToWin,
   getPointsToLose,
   setPointsToLose,
-} from "../../data/state-manager.js";
+} from "../../data/state-manager.proxy.js";
 
 export function SettingsComponent() {
   const gridSize = getGridSize();

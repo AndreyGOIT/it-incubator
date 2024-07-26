@@ -4,7 +4,7 @@ import {
   getPlayerPositions,
   removeObserver,
   setObserver,
-} from "../../data/state-manager.js";
+} from "../../data/state-manager.proxy.js";
 import { GoogleComponent } from "../Google/Google.component.js";
 import { Player1_Component } from "../Player_1/Player_1.component.js";
 import { Player2_Component } from "../Player_2/Player_2.component.js";

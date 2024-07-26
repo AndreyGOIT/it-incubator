@@ -1,4 +1,4 @@
-import {  getGridSize } from "../../data/state-manager.js";
+import {  getGridSize } from "../../data/state-manager.proxy.js";
 import { CellComponent } from "../Cell/Cell.component.js";
 
 export function GridComponent() {

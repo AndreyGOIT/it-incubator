@@ -1,5 +1,5 @@
 import { DIRECTIONS } from "../data/costants.js";
-import { movePlayer } from "../data/state-manager.js";
+import { movePlayer } from "../data/state-manager.proxy.js";
 
 export function bindKeyboardsControlsForMovingPlayer1() {
     // publisher / subject

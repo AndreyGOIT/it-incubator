@@ -1,4 +1,4 @@
-import { getPoints, removeObserver, setObserver } from "../../data/state-manager.js";
+import { getPoints, removeObserver, setObserver } from "../../data/state-manager.proxy.js";
 import { startTimer } from "../Timer/Timer.js";
 
 let timerStarted = false; // Глобальная переменная для отслеживания состояния таймера
