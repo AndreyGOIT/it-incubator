@@ -1,5 +1,5 @@
 import express from 'express';
-import { getGameStatus, getPoints } from '../data/state-manager.js';
+import { getGameStatus, getPoints, playAgain } from '../data/state-manager.js';
 const app = express()
 const port = 3000
 
@@ -11,6 +11,9 @@ app.get('/getPoints', (req, res) => {
 })
 app.get('/getGameStatus', (req, res) => {
   res.send(getGameStatus())
+})
+app.get('/playAgain', (req, res) => {
+  res.send(playAgain())
 })
 
 app.listen(port, () => {
