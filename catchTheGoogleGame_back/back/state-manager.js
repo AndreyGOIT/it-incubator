@@ -1,4 +1,5 @@
 import { GAME_STATUSES, DIRECTIONS, DOMAIN_EVENTS } from "../data/costants.js";
+
 const _state = {
   gameStatus: GAME_STATUSES.SETTINGS,
   points: {

@@ -26,7 +26,7 @@ export function AppComponent() {
   return element;
 }
 
-function render(element, localState) {
+async function render(element, localState) {
   localState.cleanups.forEach(cf => {
     if (typeof cf === 'function') {
       cf();
@@ -38,7 +38,7 @@ function render(element, localState) {
 
   element.innerHTML = "";
 
-  const gameStatus = getGameStatus();
+  const gameStatus = await getGameStatus();
   const transitions = {
     [GAME_STATUSES.WIN]: () => {
       const winWrapper = WinComponent();
