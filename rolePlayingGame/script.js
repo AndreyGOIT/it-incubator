@@ -213,6 +213,10 @@ function attack() {
       } else {
         defeatMonster();
       }
+    };
+    if (Math.random() <= .1 && inventory.length !== 1) {
+      text.innerText += " Your " + inventory.pop() + " breaks.";
+      currentWeaponIndex--;
     }
 }
 function getMonsterAttackValue(level) {
@@ -222,7 +226,7 @@ function getMonsterAttackValue(level) {
 }
 
 function isMonsterHit() {
-  return Math.random() > .2
+  return Math.random() > .2 || health < 20;
 }
 
 function dodge() {
@@ -254,4 +258,6 @@ function restart() {
   goTown()
 }
 
-
+function easterEgg() {
+  update(locations[7])
+}
