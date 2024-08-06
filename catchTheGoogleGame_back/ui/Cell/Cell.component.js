@@ -14,8 +14,6 @@ export function CellComponent(x, y) {
   cellElement.classList.add("cell");
 
   const localState = {
-    googlePosition: getGooglePosition(),
-    playerPosition: getPlayerPositions(),
     x,
     y
   };
@@ -26,13 +24,9 @@ export function CellComponent(x, y) {
       const oldGooglePosition = e.payload.oldPosition;
       // должны рендериться, если новые координаты равны мне или старые координаты равны мне
       if (newGooglePosition.x === localState.x && newGooglePosition.y === localState.y) {
-          localState.googlePosition = newGooglePosition;
-          localState.playerPosition = getPlayerPositions();
           render(cellElement, localState)
       };
       if (oldGooglePosition.x === localState.x && oldGooglePosition.y === localState.y) {
-          localState.googlePosition = newGooglePosition;
-          localState.playerPosition = getPlayerPositions();
           render(cellElement, localState)
       };
     };
@@ -42,11 +36,9 @@ export function CellComponent(x, y) {
       const oldPlayer1Position = e.payload.oldPosition;
       // должны рендериться, если новые координаты равны мне или старые координаты равны мне
       if (newPlayer1Position.x === localState.x && newPlayer1Position.y === localState.y) {
-          localState.playerPosition = getPlayerPositions();
           render(cellElement, localState)
       };
       if (oldPlayer1Position.x === localState.x && oldPlayer1Position.y === localState.y) {
-          localState.playerPosition = getPlayerPositions();
           render(cellElement, localState)
       };
     };
@@ -56,11 +48,9 @@ export function CellComponent(x, y) {
       const oldPlayer2Position = e.payload.oldPosition;
       // должны рендериться, если новые координаты равны мне или старые координаты равны мне
       if (newPlayer2Position.x === localState.x && newPlayer2Position.y === localState.y) {
-          localState.playerPosition = getPlayerPositions();
           render(cellElement, localState)
       };
       if (oldPlayer2Position.x === localState.x && oldPlayer2Position.y === localState.y) {
-          localState.playerPosition = getPlayerPositions();
           render(cellElement, localState)
       };
     };
@@ -72,11 +62,11 @@ export function CellComponent(x, y) {
   return {cellElement, cleanup: () => {removeObserver(handler)}};
 }
 
-function render(cellElement, localState) {
+async function render(cellElement, localState) {
   cellElement.innerHTML = "";
 
-  const googlePosition = localState.googlePosition;
-  const playerPosition = localState.playerPosition;
+  const googlePosition = await getGooglePosition();
+  const playerPosition = await getPlayerPositions();
   const googleElement = GoogleComponent();
   const player1Element = Player1_Component();
   const player2Element = Player2_Component();

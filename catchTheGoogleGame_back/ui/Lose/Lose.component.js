@@ -1,10 +1,12 @@
 import { getPoints, playAgain } from '../../data/state-manager.proxy.js';
-import { totalGameTime, convertTimeFormat } from '../Timer/Timer.js';
+import {getTime} from '../Timer/Timer.js'
+// import { totalGameTime, convertTimeFormat } from '../Timer/Timer.js';
 
 export function LoseComponent() {
     const element = document.createElement('div');
     element.classList.add('modal');
     const points = getPoints();
+    const gameTime = getTime();
     // modal decoration
     const modalDecorationElement = document.createElement('div');
     modalDecorationElement.classList.add('modal-decoration');
@@ -38,7 +40,7 @@ export function LoseComponent() {
     resultBlockElement_1.append(resultTitleElement_1);
     const resultScoreElement_1 = document.createElement('span');
     resultScoreElement_1.classList.add('result');
-    resultScoreElement_1.append(convertTimeFormat(totalGameTime));
+    resultScoreElement_1.append(gameTime);
 
     resultBlockElement_1.append(resultScoreElement_1);
     // 3.2. result block - 2

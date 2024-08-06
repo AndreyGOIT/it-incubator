@@ -118,40 +118,56 @@ export function removeObserver(observer) {
 // };
 
 // getter / selector / query / mapper
-export function getPoints() {
-  return {
-    
-  };
+export async function getPoints() {
+  const response = await fetch('http://localhost:3000/getPoints')
+  const result = await response.json()
+  return result
 }
 export async function getGameStatus() {
-  const promise = fetch('http://localhost:3000/getGameStatus')
-  const response = await promise
+  const response = await fetch('http://localhost:3000/getGameStatus')
   const result = await response.json()
   return result.value
 }
-export function getGridSize() {
-  return 
+export async function getGridSize() {
+  const response = await fetch('http://localhost:3000/getPoints')
+  const result = await response.json()
+  return result
 }
-export function getGooglePosition() {
-  return {
-    
-  };
+export async function getGooglePosition() {
+  const response = await fetch('http://localhost:3000/getPoints')
+  const result = await response.json()
+  return result
 }
-export function getPlayerPositions() {
-  return 
+export async function getPlayerPositions() {
+  const response = await fetch('http://localhost:3000/getPoints')
+  const result = await response.json()
+  return result
 }
 // Геттер для pointsToWin
-export function getPointsToWin() {
-  return 
+export async function getPointsToWin() {
+  const response = await fetch('http://localhost:3000/getPoints')
+  const result = await response.json()
+  return result
 }
 // Геттер для pointsToLose
-export function getPointsToLose() {
-  return 
+export async function getPointsToLose() {
+  const response = await fetch('http://localhost:3000/getPoints')
+  const result = await response.json()
+  return result
 }
 /*---------------------------------------------------*/
 // setter / command / mutator / side-effect / CQRS
 export function playAgain() {
-  
+  fetch('http://localhost:3000/playAgain');
+//   try {
+//     const response = await fetch('http://localhost:3000/playAgain');
+//     if (!response.ok) {
+//         throw new Error('Network response was not ok');
+//     }
+//     console.log('Game restarted successfully');
+// } catch (error) {
+//     console.error('There was a problem with the fetch operation:', error);
+// }
 }
 
 // setter Функция для установки размера сетки
@@ -168,7 +184,7 @@ export function setPointsToLose(points) {
 }
 
 export function movePlayer(id, direction) {
-  
+  fetch(`http://localhost:3000/movePlayer?id=${id}&direction=${direction}`);
 }
 
 

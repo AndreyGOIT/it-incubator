@@ -4,13 +4,23 @@ import { CellComponent } from "../Cell/Cell.component.js";
 export function GridComponent() {
     const element = document.createElement('table');
     element.classList.add('table');
-    const tableBodyElement = document.createElement('tbody');
-
-    const gridSize = getGridSize();
-
+    
     const localState = {
         childrenCleanups: []
     }
+
+    render(element, localState);
+
+    return {element, cleanup: () => {
+        localState.childrenCleanups.forEach(cf => cf());
+        localState.childrenCleanups = []
+    }};
+}
+
+async function render(element, localState) {
+    const tableBodyElement = document.createElement('tbody');
+
+    const gridSize = await getGridSize();
     
     for (let y = 0; y < gridSize.height; y++) {
         const rowElement = document.createElement('tr');
@@ -23,8 +33,4 @@ export function GridComponent() {
         tableBodyElement.append(rowElement);
     }
     element.append(tableBodyElement);
-    return {element, cleanup: () => {
-        localState.childrenCleanups.forEach(cf => cf());
-        localState.childrenCleanups = []
-    }};
 }

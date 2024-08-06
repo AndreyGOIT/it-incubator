@@ -1,5 +1,6 @@
 import { getPoints, removeObserver, setObserver } from "../../data/state-manager.proxy.js";
-import { startTimer } from "../Timer/Timer.js";
+import {getTime} from '../Timer/Timer.js'
+// import { startTimer } from "../Timer/Timer.js";
 
 let timerStarted = false; // Глобальная переменная для отслеживания состояния таймера
 let resultTimerElement_4; // Глобальная переменная для хранения ссылки на элемент таймера
@@ -8,26 +9,21 @@ export function ResultPanelComponent() {
   const element = document.createElement("div");
   element.classList.add("result-container");
 
-  const points = getPoints();
-  const localState = {
-    points: points,
-  };
-
-  render(element, localState);
+  render(element);
 
   const handler = () => {
-    localState.points = getPoints();
 
-    render(element, localState);
+    render(element);
   };
   setObserver(handler);
 
   return {element, cleanup: () => {removeObserver(handler)}};
 }
 
-function render(element, localState) {
+async function render(element) {
+  const points = await getPoints();
+  const gameTime = await getTime();
   element.innerHTML = "";
-  const points = localState.points;
   // result block 1
   const resultBlockElement_1 = document.createElement("div");
   resultBlockElement_1.classList.add("result-block");
@@ -100,20 +96,21 @@ function render(element, localState) {
 
   resultTimerElement_4 = document.createElement("span");
   resultTimerElement_4.classList.add("result");
-  if (
-    points.players[0].value === 0 &&
-    points.players[1].value === 0 &&
-    points.google === 0
-  ) {
-    resultTimerElement_4.textContent = "00:00";
-    timerStarted = false;
-  }
-  if (!timerStarted) {
-    timerStarted = true;
-    startTimer((time) => {
-      resultTimerElement_4.textContent = time;
-    });
-  }
+  // if (
+  //   points.players[0].value === 0 &&
+  //   points.players[1].value === 0 &&
+  //   points.google === 0
+  // ) {
+  //   resultTimerElement_4.textContent = "00:00";
+  //   timerStarted = false;
+  // }
+  // if (!timerStarted) {
+  //   timerStarted = true;
+  //   startTimer((time) => {
+  //     resultTimerElement_4.textContent = time;
+  //   });
+  resultTimerElement_4.textContent = gameTime;
+
 
   resultBlockElement_4.append(resultTimerElement_4);
 

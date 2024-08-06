@@ -5,7 +5,8 @@ import { getGameStatus, setObserver } from "../data/state-manager.proxy.js";
 import { DOMAIN_EVENTS, GAME_STATUSES } from "../data/costants.js";
 import { WinComponent } from "./Win/Win.component.js";
 import { SettingsComponent } from "./Settings/Settings.component.js";
-import { stopVoiceRecognition } from "./controls.js";
+// import { stopVoiceRecognition } from "./controls.js";
+import {startTimer, resetTimer, stopTimer} from './Timer/Timer.js'
 
 export function AppComponent() {
   const element = document.createElement("div");
@@ -41,23 +42,25 @@ async function render(element, localState) {
   const gameStatus = await getGameStatus();
   const transitions = {
     [GAME_STATUSES.WIN]: () => {
+      stopTimer();
       const winWrapper = WinComponent();
       element.append(winWrapper.element);
-      stopVoiceRecognition();
+      // stopVoiceRecognition();
 
       localState.cleanups.push(winWrapper.cleanup);
     },
     [GAME_STATUSES.LOSE]: () => {
+      stopTimer();
       const loseWrapper = LoseComponent();
       element.append(loseWrapper.element);
-      stopVoiceRecognition();
+      // stopVoiceRecognition();
 
       localState.cleanups.push(loseWrapper.cleanup);
     },
     [GAME_STATUSES.SETTINGS]: () => {
       const settingsWrapper = SettingsComponent();
       element.append(settingsWrapper.element);
-      stopVoiceRecognition();
+      // stopVoiceRecognition();
 
       localState.cleanups.push(settingsWrapper.cleanup);
     },
@@ -69,6 +72,8 @@ async function render(element, localState) {
 
       localState.cleanups.push(resultPanelWrapper.cleanup);
       localState.cleanups.push(gridWrapper.cleanup);
+      resetTimer();
+      startTimer();
     },
   };
   transitions[gameStatus]();

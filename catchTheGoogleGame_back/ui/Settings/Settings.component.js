@@ -9,10 +9,10 @@ import {
   setPointsToLose,
 } from "../../data/state-manager.proxy.js";
 
-export function SettingsComponent() {
-  const gridSize = getGridSize();
-  const pointsToWin = getPointsToWin();
-  const pointsToLose = getPointsToLose();
+export async function SettingsComponent() {
+  const gridSize = await getGridSize();
+  const pointsToWin = await getPointsToWin();
+  const pointsToLose = await getPointsToLose();
 
   const element = document.createElement("div");
   element.classList.add("settings-container");
